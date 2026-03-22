@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "WebFetch(domain:nice-branding.com)",
+      "Bash(npm install:*)",
+      "WebFetch(domain:www.peakaquaticsports.com)",
+      "WebSearch",
+      "WebFetch(domain:en.wikipedia.org)",
+      "WebFetch(domain:commons.wikimedia.org)",
+      "WebFetch(domain:api.wikimedia.org)",
+      "WebFetch(domain:www.wikiwand.com)",
+      "WebFetch(domain:upload.wikimedia.org)",
+      "WebFetch(domain:katharinabrunner.de)",
+      "WebFetch(domain:en.m.wikipedia.org)",
+      "WebFetch(domain:dbpedia.org)",
+      "WebFetch(domain:www.wikidata.org)",
+      "WebFetch(domain:uofrathletics.com)",
+      "WebFetch(domain:athletics.wesleyan.edu)",
+      "WebFetch(domain:athletics.cmu.edu)",
+      "WebFetch(domain:www.ncaa.com)",
+      "Read(//Users/briando/**)",
+      "Bash(zip -r peak-aquatic-sports.zip peak-aquatic-sports --exclude \"peak-aquatic-sports/node_modules/*\" --exclude \"peak-aquatic-sports/.git/*\" --exclude \"peak-aquatic-sports/dist/*\")",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git config:*)"
+    ]
+  }
+}
