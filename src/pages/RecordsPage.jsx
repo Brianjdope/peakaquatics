@@ -36,6 +36,21 @@ export default function RecordsPage() {
             <div className="records-hero-grid" style={{ marginBottom: '4rem' }}>
               {RECORDS_HERO.map((r, i) => (
                 <div className="record-hero-card" key={i}>
+                  {r.photo && (
+                    <img
+                      src={r.photo}
+                      alt={r.swimmer}
+                      style={{
+                        width: 88,
+                        height: 88,
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                        objectPosition: 'center 20%',
+                        marginBottom: '0.75rem',
+                        border: '2px solid var(--accent)',
+                      }}
+                    />
+                  )}
                   <div className="record-badge">{r.badge}</div>
                   <div className="record-time">{r.time}</div>
                   <div className="record-event">{r.event}</div>

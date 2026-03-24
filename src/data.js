@@ -405,10 +405,10 @@ export const NEWS_LIST = [
 ]
 
 export const RECORDS_HERO = [
-  { time: '1:45.16', event: '200 Yard Backstroke',          swimmer: 'Eric Lee',          badge: 'Boys All-Time SCY' },
-  { time: '4:07.11', event: '400 Yard Individual Medley',   swimmer: 'Chloe Kim',         badge: 'Girls All-Time SCY' },
-  { time: '2:03.26', event: '200 Meter Individual Medley',  swimmer: 'Richard Poplawski', badge: 'Boys All-Time LCM' },
-  { time: '16:09.37',event: '1500 Meter Freestyle',         swimmer: 'Kate Hurst',        badge: 'Girls All-Time LCM · 12th in US History' },
+  { time: '1:45.16', event: '200 Yard Backstroke',          swimmer: 'Eric Lee',          badge: 'Boys All-Time SCY',  photo: '/peakaquatics1/athletes/eric-lee.webp' },
+  { time: '4:07.11', event: '400 Yard Individual Medley',   swimmer: 'Chloe Kim',         badge: 'Girls All-Time SCY', photo: '/peakaquatics1/athletes/chloe-kim.webp' },
+  { time: '2:03.26', event: '200 Meter Individual Medley',  swimmer: 'Richard Poplawski', badge: 'Boys All-Time LCM',  photo: '/peakaquatics1/athletes/richard-poplawski.webp' },
+  { time: '16:09.37',event: '1500 Meter Freestyle',         swimmer: 'Kate Hurst',        badge: 'Girls All-Time LCM · 12th in US History', photo: 'https://dxbhsrqyrr690.cloudfront.net/sidearm.nextgen.sites/texassports_com/images/2024/9/4/__0014_Hurst_Kate-2024.jpg' },
 ]
 
 // rows format for 14&Under: [event, n1,t1,y1, n2,t2,y2, n3,t3,y3]
