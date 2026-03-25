@@ -194,7 +194,7 @@ export default function HomePage({ setPage, goToBooking }) {
             <RevealSection delay={0}>
               <p className="section-label">What We Do</p>
               <h2 style={{ lineHeight:1.05, marginTop:'0.5rem' }}>
-                A Consultancy<br />Built for<br />Champions
+                A Consultancy<br />Built for<br />Excellence
               </h2>
             </RevealSection>
             <RevealSection delay={0.15}>
@@ -224,6 +224,18 @@ export default function HomePage({ setPage, goToBooking }) {
             </RevealSection>
           </div>
         </div>
+      </section>
+
+      {/* ── VIDEO ── */}
+      <section style={{ background: '#030303', padding: 0, lineHeight: 0, fontSize: 0 }}>
+        <video
+          style={{ width: '100%', display: 'block' }}
+          autoPlay
+          muted
+          loop
+          playsInline
+          src="/peakaquatics1/hero-video.mp4"
+        />
       </section>
 
       {/* ── IMAGE SPLIT ── */}

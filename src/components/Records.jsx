@@ -70,10 +70,13 @@ export default function Records() {
                 <th>2nd Place</th>
                 <th>Time</th>
                 <th>Year</th>
+                <th>3rd Place</th>
+                <th>Time</th>
+                <th>Year</th>
               </tr>
             </thead>
             <tbody>
-              {table.rows.map(([event, n1, t1, y1, n2, t2, y2], i) => (
+              {table.rows.map(([event, n1, t1, y1, n2, t2, y2, n3, t3, y3], i) => (
                 <tr key={i}>
                   <td>{event}</td>
                   <td className="rank-1">{n1}</td>
@@ -82,6 +85,9 @@ export default function Records() {
                   <td className="rank-2">{n2}</td>
                   <td>{t2}</td>
                   <td>{y2}</td>
+                  <td className="rank-3">{n3}</td>
+                  <td>{t3}</td>
+                  <td>{y3}</td>
                 </tr>
               ))}
             </tbody>

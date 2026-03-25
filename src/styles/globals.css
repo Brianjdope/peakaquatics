@@ -323,15 +323,27 @@ section { padding: 8rem 0; }
   background: #0c1a33;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 6rem 4rem 4rem;
+  justify-content: flex-end;
+  padding: 4rem 4rem 6rem;
 }
+.nav-drawer-social {
+  position: absolute;
+  top: 4rem;
+  right: 4rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+.nav-drawer-social a {
+  color: #fcfcfc;
+  transition: opacity 0.2s;
+}
+.nav-drawer-social a:hover { opacity: 0.6; }
 .nav-drawer-logo {
   position: absolute;
   top: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 36px;
+  right: 4rem;
+  height: 80px;
   width: auto;
   filter: brightness(0) invert(1);
 }
@@ -342,18 +354,19 @@ section { padding: 8rem 0; }
 }
 .nav-drawer-link {
   font-family: var(--display);
-  font-size: clamp(3rem, 8vw, 7rem);
-  line-height: 1.1;
-  color: rgba(255,255,255,0.25);
+  font-size: clamp(3.5rem, 9vw, 8.5rem);
+  line-height: 1.0;
+  color: rgba(255,255,255,0.22);
   background: none;
   border: none;
   cursor: pointer;
   text-align: left;
-  padding: 0.15rem 0;
+  padding: 0.08rem 0;
   transition: color 0.25s;
   text-transform: uppercase;
-  letter-spacing: -0.01em;
-  font-style: italic;
+  letter-spacing: -0.02em;
+  font-style: normal;
+  font-weight: 900;
 }
 .nav-drawer-link:hover,
 .nav-drawer-link.active { color: #fcfcfc; }
@@ -820,11 +833,11 @@ section { padding: 8rem 0; }
   border-color: rgba(255,255,255,0.25);
   transform: translateY(-3px);
 }
-.news-card-img-wrap { overflow: hidden; height: 190px; }
+.news-card-img-wrap { overflow: hidden; height: 240px; }
 .news-card-img {
-  width: 100%; height: 190px;
+  width: 100%; height: 240px;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 20%;
   display: block;
   transition: transform 0.7s var(--ease);
 }
@@ -1021,6 +1034,7 @@ section { padding: 8rem 0; }
 .records-rank { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); }
 .rank-1 { color: #fcfcfc !important; }
 .rank-2 { color: rgba(252,252,252,0.5) !important; }
+.rank-3 { color: rgba(252,252,252,0.35) !important; }
 
 /* ── SERVICES ── */
 .services { background: var(--surface); }
@@ -1569,6 +1583,14 @@ section { padding: 8rem 0; }
   align-items: center;
   justify-content: center;
   cursor: default;
+}
+.hero-video-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
 .full-slide-bg {
   position: absolute;

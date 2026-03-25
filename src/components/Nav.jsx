@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const LOGO_URL = 'https://images.squarespace-cdn.com/content/v1/613a5c22540e534e72bda9a1/7fd6ea37-8f94-4626-ac71-1fe5e214471e/peak-aquatic-primary-logo-black.png'
-
 const LINKS = [
   { label: 'Work',       page: 'placements' },
   { label: 'About',      page: 'about' },
@@ -11,6 +9,16 @@ const LINKS = [
   { label: 'News & Events', page: 'news' },
   { label: 'Contact',    page: 'contact' },
 ]
+
+const InstagramIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+)
+const EmailIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+)
+const PhoneIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+)
 
 export default function Nav({ page, setPage, goToBooking }) {
   const [scrolled, setScrolled] = useState(false)
@@ -34,7 +42,7 @@ export default function Nav({ page, setPage, goToBooking }) {
 
   return (
     <>
-      {/* Top bar — hamburger left, social right */}
+      {/* Top bar — hamburger/X left, social right */}
       <nav className={`nav${scrolled || page !== 'home' ? ' scrolled' : ''}`}>
         <button
           className="nav-hamburger"
@@ -46,17 +54,14 @@ export default function Nav({ page, setPage, goToBooking }) {
           <span className={`hamburger-line${menuOpen ? ' open' : ''}`} />
         </button>
 
-        <div className="nav-social">
-          <a href="https://www.instagram.com/philkangg/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
-          </a>
-          <a href="mailto:Philip.jkang@gmail.com" aria-label="Email">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
-          </a>
-          <a href="tel:+12013595688" aria-label="Phone">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-          </a>
-        </div>
+        {/* Social icons in nav bar (hidden when drawer open, shown in drawer instead) */}
+        {!menuOpen && (
+          <div className="nav-social">
+            <a href="https://www.instagram.com/philkangg/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><InstagramIcon /></a>
+            <a href="mailto:Philip.jkang@gmail.com" aria-label="Email"><EmailIcon /></a>
+            <a href="tel:+12013595688" aria-label="Phone"><PhoneIcon /></a>
+          </div>
+        )}
       </nav>
 
       {/* Full-screen McCann-style drawer */}
@@ -69,15 +74,19 @@ export default function Nav({ page, setPage, goToBooking }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Centered logo at top — click to go home */}
-            <img
-              src={LOGO_URL}
-              alt="Peak Aquatic Sports"
-              className="nav-drawer-logo"
-              style={{ cursor: 'pointer' }}
-              onClick={() => handleNav('home')}
-            />
+            {/* Social icons top-right */}
+            <motion.div
+              className="nav-drawer-social"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              <a href="https://www.instagram.com/philkangg/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><InstagramIcon /></a>
+              <a href="mailto:Philip.jkang@gmail.com" aria-label="Email"><EmailIcon /></a>
+              <a href="tel:+12013595688" aria-label="Phone"><PhoneIcon /></a>
+            </motion.div>
 
+            {/* Links — bottom-left aligned like McCann */}
             <div className="nav-drawer-content">
               {LINKS.map((l, i) => (
                 <motion.button
