@@ -31,12 +31,10 @@ function doGet(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME)
   var action = e.parameter.action
 
-  if (action === 'cancel') {
-    return handleCancellation(sheet, {
-      bookingId: e.parameter.bookingId,
-      email: e.parameter.email,
-    })
-  }
+  // NOTE: Cancellations are NOT allowed via GET requests.
+  // Email security systems (Microsoft Defender, Proofpoint, etc.) auto-click
+  // links in emails, which would trigger unwanted cancellations.
+  // Cancellations must go through POST only (from the website cancel page).
 
   if (action === 'lookup') {
     return handleLookup(sheet, e.parameter.email)
@@ -78,7 +76,9 @@ function handleBooking(sheet, data) {
   )
 
   // Professional HTML confirmation email to client
-  var cancelUrl = SCRIPT_URL + '?action=cancel&bookingId=' + bookingId + '&email=' + encodeURIComponent(data.email)
+  // Link to the website cancel page (NOT the API directly) to prevent
+  // email security scanners from auto-cancelling bookings
+  var cancelUrl = SITE_URL + '#cancel?id=' + bookingId + '&email=' + encodeURIComponent(data.email)
 
   var html = emailTemplate(
     'Booking Confirmed',
