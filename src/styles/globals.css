@@ -1084,9 +1084,11 @@ section { padding: 8rem 0; }
 .records-table tr:last-child td { border-bottom: none; }
 .records-table td:first-child { font-weight: 500; color: var(--text); }
 .records-table td:nth-child(2),
-.records-table td:nth-child(5) { color: var(--text2); }
+.records-table td:nth-child(5),
+.records-table td:nth-child(8) { color: var(--text2); }
 .records-table td:nth-child(3),
-.records-table td:nth-child(6) {
+.records-table td:nth-child(6),
+.records-table td:nth-child(9) {
   font-family: var(--mono);
   color: #fcfcfc;
   font-weight: 700;
