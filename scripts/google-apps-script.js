@@ -113,6 +113,23 @@ function handleBooking(data) {
   var name      = data.name  || ''
   var skill     = data.skillLevel || ''
 
+  // Server-side conflict check for 1-on-1 sessions
+  var oneOnOne = ['Intro Call', 'Video Review', 'Private Session']
+  if (oneOnOne.indexOf(data.session) > -1) {
+    var allRows = sheet.getDataRange().getValues()
+    var dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+    var dateObj = new Date(data.date)
+    var recurringKey = !isNaN(dateObj) ? 'Recurring - ' + dayNames[dateObj.getDay()] + ' at ' + data.time : ''
+    for (var k = 1; k < allRows.length; k++) {
+      var s = allRows[k][COL.STATUS].toString()
+      if (s === 'Cancelled' || s === 'Open') continue
+      var dt = allRows[k][COL.DATETIME].toString()
+      if (dt === dateTime || (recurringKey && dt === recurringKey)) {
+        return { success: false, error: 'This time slot was just booked. Please choose another time.' }
+      }
+    }
+  }
+
   // For group sessions, try to merge into existing row for same slot
   if (data.session === 'Group Session' || data.session === 'Semi-Group' || data.session === 'Dryland') {
     var rows = sheet.getDataRange().getValues()
