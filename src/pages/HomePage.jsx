@@ -16,12 +16,11 @@ const ATHLETE_SLIDES = [
     subtitle: '4th Place, World Junior Championships 2025',
   },
   {
-    img: '/peakaquatics1/athletes/richard-poplawski.webp',
+    img: '/peakaquatics1/photos/richard-action.jpg',
     label: 'USA NATIONAL TEAM',
     title: 'RICHARD POPLAWSKI',
     subtitle: 'Junior National Champion',
-    bgSize: '120%',
-    bgPosition: 'center 20%',
+    bgPosition: 'center center',
   },
   {
     img: '/peakaquatics1/photos/kate-diving.jpg',
