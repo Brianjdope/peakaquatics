@@ -20,14 +20,15 @@ const ATHLETE_SLIDES = [
     label: 'USA NATIONAL TEAM',
     title: 'RICHARD POPLAWSKI',
     subtitle: 'Junior National Champion',
-    bgPosition: 'center 15%',
+    bgSize: '120%',
+    bgPosition: 'center 20%',
   },
   {
-    img: 'https://dxbhsrqyrr690.cloudfront.net/sidearm.nextgen.sites/texassports_com/images/2024/9/4/__0014_Hurst_Kate-2024.jpg',
+    img: '/peakaquatics1/photos/kate-diving.jpg',
     label: 'UNIVERSITY OF TEXAS',
     title: 'KATE HURST',
     subtitle: 'USA National Team 2024-2025',
-    bgPosition: 'center 10%',
+    bgPosition: 'center center',
   },
   {
     img: 'https://images.squarespace-cdn.com/content/v1/613a5c22540e534e72bda9a1/bd5ba723-bf99-4d78-afee-529b7e7cc2ed/Private+Swimming+Lessons+%26+Swimming+Consultancy%7C+Paramus+%26+Tenafly%2C+New+Jersey',
