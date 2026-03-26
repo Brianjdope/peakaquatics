@@ -7,6 +7,7 @@ const LINKS = [
   { label: 'Records',    page: 'records' },
   { label: 'Services',   page: 'services' },
   { label: 'News & Events', page: 'news' },
+  { label: 'Gallery',    page: 'gallery' },
   { label: 'Contact',    page: 'contact' },
 ]
 

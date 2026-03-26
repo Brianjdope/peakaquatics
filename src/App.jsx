@@ -10,6 +10,7 @@ import ServicesPage from './pages/ServicesPage'
 import PlacementsPage from './pages/PlacementsPage'
 import ContactPage from './pages/ContactPage'
 import TermsPage from './pages/TermsPage'
+import GalleryPage from './pages/GalleryPage'
 
 const pageVariants = {
   initial: { opacity: 0, y: 18 },
@@ -95,6 +96,7 @@ export default function App() {
       case 'services':   return <ServicesPage setPage={setPage} cancelParams={cancelParams} onCancelParamsUsed={() => setCancelParams(null)} />
       case 'placements': return <PlacementsPage />
       case 'contact':    return <ContactPage />
+      case 'gallery':    return <GalleryPage />
       case 'terms':      return <TermsPage />
       default:           return <HomePage setPage={setPage} />
     }

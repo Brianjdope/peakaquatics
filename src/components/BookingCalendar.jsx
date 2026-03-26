@@ -630,6 +630,52 @@ export default function BookingCalendar({ cancelParams, onCancelParamsUsed }) {
 
       {/* Book mode */}
       {mode === 'book' && <>
+      {/* Step indicator */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 0, marginBottom: '0.25rem' }}>
+        {[
+          { n: 1, label: 'Session',    done: !!selectedSession },
+          { n: 2, label: 'Date & Time', done: !!(selectedDate && selectedTime) },
+          { n: 3, label: 'Details',    done: false },
+        ].map((step, i) => {
+          const active = (i === 0 && !selectedSession) ||
+                         (i === 1 && selectedSession && !(selectedDate && selectedTime)) ||
+                         (i === 2 && selectedDate && selectedTime)
+          return (
+            <React.Fragment key={step.n}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.2rem', flex: 1 }}>
+                <div style={{
+                  width: 24, height: 24, borderRadius: '50%',
+                  background: step.done ? 'var(--text)' : active ? 'rgba(255,255,255,0.12)' : 'transparent',
+                  border: `1px solid ${step.done ? 'var(--text)' : active ? 'rgba(255,255,255,0.35)' : 'var(--border)'}`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '0.65rem', fontWeight: 700,
+                  color: step.done ? '#000' : active ? 'var(--text)' : 'var(--muted)',
+                  transition: 'all 0.2s',
+                  flexShrink: 0,
+                }}>
+                  {step.done ? '✓' : step.n}
+                </div>
+                <span style={{
+                  fontSize: '0.6rem', fontWeight: 600, letterSpacing: '0.04em',
+                  color: step.done || active ? 'var(--text)' : 'var(--muted)',
+                  textTransform: 'uppercase', whiteSpace: 'nowrap',
+                  transition: 'color 0.2s',
+                }}>
+                  {step.label}
+                </span>
+              </div>
+              {i < 2 && (
+                <div style={{
+                  height: 1, flex: 2, marginBottom: '1.1rem',
+                  background: step.done ? 'rgba(255,255,255,0.25)' : 'var(--border)',
+                  transition: 'background 0.3s',
+                }} />
+              )}
+            </React.Fragment>
+          )
+        })}
+      </div>
+
       {/* Session type selector */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem' }}>
         {SESSION_TYPES.map((s, i) => {
@@ -820,7 +866,7 @@ export default function BookingCalendar({ cancelParams, onCancelParamsUsed }) {
             }}>
               Available times — {MONTHS[currentMonth]} {selectedDate}
             </p>
-            <div style={{
+            <div className="booking-time-grid" style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(4, 1fr)',
               gap: '0.4rem',
