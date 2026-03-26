@@ -20,7 +20,7 @@ const ATHLETE_SLIDES = [
     label: 'USA NATIONAL TEAM',
     title: 'RICHARD POPLAWSKI',
     subtitle: 'Top 50 at Olympic Trials',
-    bgPosition: 'center center',
+    bgPosition: 'center 40%',
   },
   {
     img: '/peakaquatics1/photos/kate-diving.jpg',

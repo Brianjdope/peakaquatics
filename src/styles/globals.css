@@ -1701,7 +1701,7 @@ section { padding: 8rem 0; }
 .full-slide-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(3,3,3,0.85) 0%, rgba(3,3,3,0.2) 50%, rgba(3,3,3,0.05) 100%);
+  background: linear-gradient(to top, rgba(3,3,3,0.75) 0%, rgba(3,3,3,0.35) 35%, rgba(3,3,3,0.05) 70%, rgba(3,3,3,0) 100%);
 }
 .full-slide-text {
   position: relative;
