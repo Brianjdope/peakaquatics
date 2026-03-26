@@ -26,6 +26,8 @@ const ATHLETE_SLIDES = [
     label: 'UNIVERSITY OF TEXAS',
     title: 'KATE HURST',
     subtitle: 'USA National Team 2024-2025',
+    bgSize: '75%',
+    bgPosition: 'center 20%',
   },
   {
     img: 'https://images.squarespace-cdn.com/content/v1/613a5c22540e534e72bda9a1/bd5ba723-bf99-4d78-afee-529b7e7cc2ed/Private+Swimming+Lessons+%26+Swimming+Consultancy%7C+Paramus+%26+Tenafly%2C+New+Jersey',
@@ -95,7 +97,7 @@ function RevealSection({ children, delay = 0, className = '', style = {} }) {
   )
 }
 
-function FullSlide({ img, video, label, title, subtitle, onClick, isHero }) {
+function FullSlide({ img, video, label, title, subtitle, onClick, isHero, bgSize, bgPosition }) {
   return (
     <section
       className={`full-slide${isHero ? ' full-slide--hero' : ''}`}
@@ -109,7 +111,7 @@ function FullSlide({ img, video, label, title, subtitle, onClick, isHero }) {
       )}
       {img && (
         <>
-          <div className="full-slide-bg" style={{ backgroundImage: `url(${img})` }} />
+          <div className="full-slide-bg" style={{ backgroundImage: `url(${img})`, backgroundSize: bgSize || 'cover', backgroundPosition: bgPosition || 'center' }} />
           <div className="full-slide-overlay" />
         </>
       )}
@@ -253,6 +255,8 @@ export default function HomePage({ setPage, goToBooking }) {
           label={slide.label}
           title={slide.title}
           subtitle={slide.subtitle}
+          bgSize={slide.bgSize}
+          bgPosition={slide.bgPosition}
           onClick={() => setPage('placements')}
         />
       ))}
