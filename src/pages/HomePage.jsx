@@ -19,14 +19,14 @@ const ATHLETE_SLIDES = [
     img: '/peakaquatics1/photos/richard-action.jpg',
     label: 'USA NATIONAL TEAM',
     title: 'RICHARD POPLAWSKI',
-    subtitle: 'Junior National Champion',
+    subtitle: 'World Junior Champion 2023',
     bgPosition: 'center center',
   },
   {
     img: '/peakaquatics1/photos/kate-diving.jpg',
     label: 'UNIVERSITY OF TEXAS',
     title: 'KATE HURST',
-    subtitle: 'USA National Team 2024-2025',
+    subtitle: 'USA National Team 2024-2026',
     bgPosition: 'center center',
   },
   {
