@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ success: false, error: 'Missing required booking fields.' })
   }
 
-  const booking = createBookingRecord({ name, email, phone, session, skillLevel, date, time })
+  const booking = await createBookingRecord({ name, email, phone, session, skillLevel, date, time })
   const amount = SESSION_PRICE_MAP[session] ?? 7500
   const hasStripe = Boolean(process.env.STRIPE_SECRET_KEY && process.env.STRIPE_PRICE_FALLBACK_PRODUCT)
 

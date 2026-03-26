@@ -195,10 +195,25 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <section className="page-section" style={{ background: 'var(--surface)' }}>
+      {/* Card section — full width, centered */}
+      <section style={{ background: 'var(--surface)', padding: '5rem 0 4rem' }}>
+        <div className="container" style={{ maxWidth: 640 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.1 }}
+          >
+            <Suspense fallback={<div style={{ height: 320 }} />}>
+              <BusinessCard3D />
+            </Suspense>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Contact details */}
+      <section className="page-section" style={{ background: 'var(--bg)' }}>
         <div className="container">
           <div className="contact-grid">
-            {/* Left: info */}
             <motion.div
               className="contact-info"
               initial={{ opacity: 0, x: -24 }}
@@ -234,17 +249,11 @@ export default function ContactPage() {
               </div>
             </motion.div>
 
-            {/* Right: business card */}
             <motion.div
               initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              style={{ display: 'flex', alignItems: 'center' }}
-            >
-              <Suspense fallback={<div style={{ height: 320 }} />}>
-                <BusinessCard3D />
-              </Suspense>
-            </motion.div>
+            />
           </div>
         </div>
       </section>

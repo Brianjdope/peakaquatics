@@ -32,7 +32,7 @@ export default async function handler(req, res) {
 
   if (event.type === 'checkout.session.completed') {
     const bookingId = event.data.object?.metadata?.bookingId
-    if (bookingId) markBookingPaid(bookingId)
+    if (bookingId) await markBookingPaid(bookingId)
   }
 
   return res.status(200).json({ received: true })

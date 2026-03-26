@@ -31,7 +31,8 @@
       "Bash(sudo chown:*)",
       "WebFetch(domain:www.cursor.com)",
       "WebFetch(domain:life-advice-from-strangers.vercel.app)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(git stash:*)"
     ]
   }
 }

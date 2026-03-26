@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     if (proxy?.success) return res.status(200).json(proxy)
   } catch {}
 
-  const cancelled = cancelBookingRecord(bookingId, email)
+  const cancelled = await cancelBookingRecord(bookingId, email)
   if (!cancelled) return res.status(404).json({ success: false, error: 'Booking not found.' })
   return res.status(200).json({ success: true, bookingId })
 }

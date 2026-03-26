@@ -11,5 +11,6 @@ export default async function handler(req, res) {
     if (proxy?.success) return res.status(200).json(proxy)
   } catch {}
 
-  return res.status(200).json({ success: true, bookings: listBookingsByEmail(email) })
+  const bookings = await listBookingsByEmail(email)
+  return res.status(200).json({ success: true, bookings })
 }

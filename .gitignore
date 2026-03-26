@@ -3,3 +3,5 @@ dist/
 .vite/
 firebase-debug.log
 *.local
+.vercel
+.env*.local
