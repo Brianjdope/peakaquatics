@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <rect width="192" height="192" fill="#030303"/>
+  <path d="M24 132c16-20 35-30 57-30 22 0 40 10 56 30" fill="none" stroke="#fcfcfc" stroke-width="10" stroke-linecap="round"/>
+  <path d="M29 90c12-15 27-23 45-23s33 8 46 23" fill="none" stroke="#fcfcfc" stroke-width="8" stroke-linecap="round" opacity=".8"/>
+  <text x="96" y="44" text-anchor="middle" fill="#fcfcfc" font-family="Arial,sans-serif" font-size="22" font-weight="700">PAS</text>
+</svg>
