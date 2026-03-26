@@ -1094,9 +1094,7 @@ section { padding: 8rem 0; }
 }
 .records-table tr:hover td { background: rgba(255,255,255,0.02); }
 .records-rank { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); }
-.rank-1 { color: #fcfcfc !important; }
-.rank-2 { color: rgba(252,252,252,0.5) !important; }
-.rank-3 { color: rgba(252,252,252,0.35) !important; }
+.rank-1, .rank-2, .rank-3 { color: #fcfcfc !important; font-weight: 700; }
 
 /* ── SERVICES ── */
 .services { background: var(--surface); }
