@@ -58,7 +58,7 @@ const SESSION_TYPES = [
   { id: 'private', label: 'Private Session', duration: '1 hr', color: '#34d399' },
   { id: 'semi', label: 'Semi-Group', duration: '1.5 hr', color: '#fbbf24' },
   { id: 'group', label: 'Group Session', duration: '1.5 hr', color: '#f97316' },
-  { id: 'dryland', label: 'Dryland', duration: '1 hr', color: '#94a3b8' },
+  { id: 'dryland', label: 'Dryland', duration: '1 hr', color: '#ef4444' },
 ]
 
 const TIME_SLOTS = ['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM']
@@ -117,6 +117,7 @@ export default function BookingCalendar({ cancelParams, onCancelParamsUsed }) {
   const [skillLevel, setSkillLevel] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [bookedTimes, setBookedTimes] = useState([])
   const fileRef = useRef()
 
   // Cancellation state
@@ -742,7 +743,19 @@ export default function BookingCalendar({ cancelParams, onCancelParamsUsed }) {
               <button
                 key={day}
                 disabled={disabled}
-                onClick={() => { setSelectedDate(day); setSelectedTime(null) }}
+                onClick={() => {
+                  setSelectedDate(day)
+                  setSelectedTime(null)
+                  setBookedTimes([])
+                  if (SHEETS_API) {
+                    const dateStr = `${MONTHS[currentMonth]} ${day}, ${currentYear}`
+                    const dayName = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date(currentYear, currentMonth, day).getDay()]
+                    fetch(`${SHEETS_API}?action=available&date=${encodeURIComponent(dateStr)}&day=${encodeURIComponent(dayName)}`)
+                      .then(r => r.json())
+                      .then(d => { if (d.success) setBookedTimes(d.booked || []) })
+                      .catch(() => {})
+                  }
+                }}
                 style={{
                   aspectRatio: '1',
                   display: 'flex',
@@ -804,7 +817,7 @@ export default function BookingCalendar({ cancelParams, onCancelParamsUsed }) {
               gridTemplateColumns: 'repeat(4, 1fr)',
               gap: '0.4rem',
             }}>
-              {TIME_SLOTS.map(t => (
+              {TIME_SLOTS.filter(t => !bookedTimes.includes(t)).map(t => (
                 <button
                   key={t}
                   onClick={() => setSelectedTime(t)}
@@ -926,15 +939,19 @@ export default function BookingCalendar({ cancelParams, onCancelParamsUsed }) {
             <div style={{ marginBottom: '0.75rem' }}>
               <p style={{ color: 'var(--muted)', fontSize: '0.72rem', marginBottom: '0.4rem' }}>Skill Level (optional)</p>
               <div style={{ display: 'flex', gap: '0.4rem' }}>
-                {['Novice', 'Intermediate', 'Advanced'].map(level => (
+                {[
+                  { label: 'Novice',       color: '#34d399' },
+                  { label: 'Intermediate', color: '#fbbf24' },
+                  { label: 'Advanced',     color: '#ef4444' },
+                ].map(({ label, color }) => (
                   <button
-                    key={level}
-                    onClick={() => setSkillLevel(skillLevel === level ? '' : level)}
+                    key={label}
+                    onClick={() => setSkillLevel(skillLevel === label ? '' : label)}
                     style={{
                       flex: 1,
-                      background: skillLevel === level ? (sessionObj?.color || 'var(--text)') : 'var(--surface2)',
-                      color: skillLevel === level ? '#000' : 'var(--muted)',
-                      border: `1px solid ${skillLevel === level ? 'transparent' : 'var(--border)'}`,
+                      background: skillLevel === label ? color : 'var(--surface2)',
+                      color: skillLevel === label ? '#000' : 'var(--muted)',
+                      border: `1px solid ${skillLevel === label ? color : 'var(--border)'}`,
                       borderRadius: 6,
                       padding: '0.45rem 0.25rem',
                       fontSize: '0.72rem',
@@ -943,7 +960,7 @@ export default function BookingCalendar({ cancelParams, onCancelParamsUsed }) {
                       transition: 'all 0.15s',
                     }}
                   >
-                    {level}
+                    {label}
                   </button>
                 ))}
               </div>
