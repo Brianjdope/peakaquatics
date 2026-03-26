@@ -280,6 +280,7 @@ section { padding: 8rem 0; }
   top: 0; left: 0; right: 0;
   z-index: 160;
   padding: 1.5rem 2rem;
+  min-height: 54px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -296,7 +297,7 @@ section { padding: 8rem 0; }
 /* Hamburger button — standalone fixed, always on top */
 .nav-hamburger {
   position: fixed;
-  top: 1.4rem;
+  top: 12px;
   left: 2rem;
   z-index: 9999;
   display: flex;
