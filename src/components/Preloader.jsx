@@ -142,7 +142,7 @@ export default function Preloader({ onComplete }) {
                   textTransform: 'uppercase',
                 }}
               >
-                Rise Above All
+                Rise Higher
               </motion.div>
             </div>
           )}
