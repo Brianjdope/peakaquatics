@@ -704,7 +704,7 @@ export const RECORDS_TABLES = {
     r('100 Fly',    p('Richard Poplawski',   '57.07',    2021), p('Ryker Levi',          '57.88',    2025), p('Timothy Lee',        '58.24',    2025)),
     r('200 Fly',    p('Richard Poplawski',   '2:05.53',  2021), p('Chase Kim',           '2:07.83',  2026), p('Ryker Levi',         '2:08.65',  2025)),
     r('100 Breast', p('Connor Hong',         '1:09.27',  2023), p('Eric Lee',            '1:09.77',  2020), p('Woori Lee',          '1:10.47',  2022)),
-    r('200 Breast', p('Joshua Reines',       '2:29.62',  2023), p('Eric Lee',            '2:29.94',  2023), p('Richard Poplawski',  '2:31.25',  2021)),
+    r('200 Breast', p('Connor Hong',          '2:29.62',  2023), p('Joshua Reines',       '2:29.94',  2023), p('Richard Poplawski',  '2:31.25',  2021)),
     r('200 IM',     p('Richard Poplawski',   '2:06.42',  2021), p('Woori Lee',           '2:12.96',  2022), p('Ethan Reines',       '2:14.52',  2025)),
     r('400 IM',     p('Richard Poplawski',   '4:30.31',  2021), p('Ethan Reines',        '4:37.63',  2026), p('Eric Lee',           '4:43.53',  2020)),
   ]),
@@ -734,8 +734,8 @@ export const RECORDS_TABLES = {
   // ═══════════════════════════════════════════════════════════
   'scy-men': buildTable("SCY Men's Open", [
     r('50 Free',    p('Timothy Lee',         '20.54',    2024), p('Ryker Levi',          '20.56',    2025), p('Richard Poplawski',    '20.81',    2023)),
-    r('100 Free',   p('Ryker Levi',          '21.18',    2025), p('Timothy Lee',         '21.32',    2022), p('Richard Poplawski',    '21.98',    2021)),
-    r('200 Free',   p('Timothy Lee',         '44.71',    2024), p('Richard Poplawski',   '45.18',    2023), p('Eric Lee',             '46.23',    2023)),
+    r('100 Free',   p('Timothy Lee',         '44.71',    2024), p('Richard Poplawski',   '45.18',    2023), p('Eric Lee',             '46.23',    2023)),
+    r('200 Free',   p('Richard Poplawski',   '1:37.90',  2023), p('Timothy Lee',         '1:38.75',  2025), p('Ryker Levi',           '1:39.61',  2025)),
     r('500 Free',   p('Richard Poplawski',   '4:28.84',  2023), p('Steven Bendoraitis',  '4:29.22',  2022), p('Christopher Chang',    '4:29.52',  2022)),
     r('1000 Free',  p('Steven Bendoraitis',  '9:08.65',  2022), p('Eric Lee',            '9:18.38',  2022), p('Raymond Stelmark',     '9:20.12',  2023)),
     r('1650 Free',  p('Steven Bendoraitis',  '15:17.44', 2022), p('Christopher Chang',   '15:40.96', 2022), p('Richard Poplawski',    '15:42.14', 2023)),
