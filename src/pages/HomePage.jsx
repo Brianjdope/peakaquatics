@@ -16,8 +16,8 @@ const ATHLETE_SLIDES = [
     subtitle: '4th Place, World Junior Championships 2025',
   },
   {
-    img: '/peakaquatics1/photos/richard-action.jpg',
-    label: 'USA NATIONAL TEAM',
+    img: '/peakaquatics1/photos/richard-hometown-hero.jpg',
+    label: 'HARVARD UNIVERSITY',
     title: 'RICHARD POPLAWSKI',
     subtitle: 'Top 50 at Olympic Trials',
     bgPosition: 'center 40%',

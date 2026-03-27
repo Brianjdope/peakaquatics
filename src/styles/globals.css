@@ -1772,6 +1772,10 @@ section { padding: 8rem 0; }
   .news-featured-img { min-height: 240px; }
   .news-featured-body { padding: 2rem 1.5rem; }
   .stats-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .stats-bar { padding: 3rem 0; }
+  .stat-block { padding: 0 1rem; }
+  .stat-num { font-size: clamp(2rem, 8vw, 2.6rem); }
+  .stat-label { font-size: 0.65rem; }
   .faq-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .form-row { grid-template-columns: 1fr; }
@@ -1783,8 +1787,8 @@ section { padding: 8rem 0; }
   .records-tabs { flex-wrap: wrap; width: 100%; }
   .hero h1, .hero-display { font-size: clamp(3rem, 10vw, 5rem); }
   .full-slide-text { padding: 2rem 1.5rem; }
-  .full-slide-text--center { padding: 2rem 1.5rem; text-align: center; }
-  .full-slide--hero { min-height: 65vh; min-height: 65svh; }
+  .full-slide-text--center { padding: 2rem 1.5rem; padding-bottom: 6rem; text-align: center; }
+  .full-slide--hero { min-height: 100vh; min-height: 100svh; }
   .full-slide:not(.full-slide--hero) { min-height: 70vh; min-height: 70svh; max-height: 85vh; max-height: 85svh; height: 70vh; height: 70svh; }
   .full-slide-title { font-size: clamp(2.2rem, 8vw, 5rem); }
   .booking-time-grid { grid-template-columns: repeat(3, 1fr) !important; }

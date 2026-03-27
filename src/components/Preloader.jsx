@@ -66,7 +66,7 @@ export default function Preloader({ onComplete }) {
                 style={{
                   height: 'clamp(160px, 32vw, 360px)',
                   width: 'auto',
-                  filter: 'brightness(0) invert(1)',
+                  filter: 'brightness(0) invert(1) contrast(10)',
                   objectPosition: 'top',
                   display: 'block',
                 }}
