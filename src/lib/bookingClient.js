@@ -56,9 +56,9 @@ export async function createBooking(payload) {
 }
 
 export async function uploadVideo(fileName, bookingId, file, onProgress) {
-  const MAX_SIZE = 50 * 1024 * 1024 // 50 MB
+  const MAX_SIZE = 500 * 1024 * 1024 // 500 MB
   if (file.size > MAX_SIZE) {
-    return { success: false, error: 'Video must be under 50 MB. Please compress it or email it to peakaquaticsports@gmail.com.' }
+    return { success: false, error: 'Video must be under 500 MB. Please compress it or email it to peakaquaticsports@gmail.com.' }
   }
 
   // Read file as base64
