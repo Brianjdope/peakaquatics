@@ -20,6 +20,23 @@ export const STATS = [
 
 const CDN2 = 'https://images.squarespace-cdn.com/content/v1/613a5c22540e534e72bda9a1/'
 export const ARTICLES = {
+  'ethan-state-record': {
+    tag: 'Competition',
+    date: 'March 27, 2026',
+    title: 'Ethan Reines Breaks the 13-14 State Record in the 500 Freestyle',
+    img: 'https://images.squarespace-cdn.com/content/v1/613a5c22540e534e72bda9a1/5c030ab9-385e-42d4-9fe0-dfd038431410/79624924812__79255E09-69B2-4832-8BEE-1511FA5B9790.jpeg',
+    imgPos: 'center 40%',
+    excerpt: 'Ethan Reines, age 14, breaks the New Jersey State Record in the 500 Freestyle with a time of 4:30.88 at the 2026 NJS & Scarlet 11 & Over Gold Championships.',
+    body: [
+      '2026 NJS & Scarlet 11 & Over Gold Championships — March 19-22 at Sonny Werblin Recreation Center',
+      'Ethan Reines, age 14, achieved a major milestone by breaking the New Jersey State Record in the 500 Freestyle with a time of 4:30.88 on March 20th.',
+      'Meet Highlights:',
+      'March 19: Reines secured first place in the 1650 Freestyle (15:48.39). Teammate Sebastian Hendrawan posted 16:07.22 in the same event.',
+      'March 20: Beyond the record swim, Joshua Reines and Yuriel Lee both achieved lifetime bests in the 200 Individual Medley (1:51.64 and 1:51.49 respectively). Chase Kim recorded 50.91 in the 100 Butterfly.',
+      'March 21-22: The team continued excelling, with Joshua Reines breaking the 4-minute barrier in the 400 Individual Medley (3:59.61), and Ethan Reines finishing at 3:58.98.',
+      'Congratulations to all the swimmers for their hard work and dedication throughout the weekend, with several advancing to Sectionals and YMCA Nationals!',
+    ],
+  },
   'tyr-2026': {
     tag: 'Competition',
     date: 'January 19, 2026',
@@ -557,7 +574,8 @@ export const ARTICLES = {
 }
 
 export const NEWS_LIST = [
-  { id: 'tyr-2026', featured: true },
+  { id: 'ethan-state-record', featured: true },
+  { id: 'tyr-2026' },
   { id: 'chloe-worlds' },
   { id: 'jonas-wesleyan' },
   { id: 'rebekah-rochester' },
@@ -599,169 +617,197 @@ export const RECORDS_HERO = [
   { time: '16:09.37',event: '1500 Meter Freestyle',         swimmer: 'Kate Hurst',        badge: 'Girls All-Time LCM · 12th in US History', photo: 'https://dxbhsrqyrr690.cloudfront.net/sidearm.nextgen.sites/texassports_com/images/2024/9/4/__0014_Hurst_Kate-2024.jpg' },
 ]
 
-// rows format for 14&Under: [event, n1,t1,y1, n2,t2,y2, n3,t3,y3]
-// rows format for Open:      [event, n1,t1,y1, n2,t2,y2]
+// ─────────────────────────────────────────────────────────────
+// RECORDS DATA — Easy to edit!
+//
+// To add/update a record, find the category and event, then change:
+//   { name: 'Swimmer Name', time: '1:23.45', year: 2025 }
+//
+// Each event has: first, second, third (3 place finishers)
+// ─────────────────────────────────────────────────────────────
+
+function r(event, first, second, third) {
+  return { event, first, second, third }
+}
+function p(name, time, year) {
+  return { name, time, year }
+}
+
+// Convert new format to the array format the components expect
+function buildTable(label, records) {
+  return {
+    label,
+    threeCol: true,
+    rows: records.map(r => [
+      r.event,
+      r.first.name,  r.first.time,  String(r.first.year),
+      r.second.name, r.second.time, String(r.second.year),
+      r.third.name,  r.third.time,  String(r.third.year),
+    ]),
+  }
+}
+
 export const RECORDS_TABLES = {
-  'scy-boys-14': {
-    label: 'SCY Boys 14 & Under',
-    threeCol: true,
-    rows: [
-      ['50 Free',   'Ryker Levi','21.18','2025',          'Timothy Lee','21.32','2022',           'Richard Poplawski','21.98','2021'],
-      ['100 Free',  'Ryker Levi','45.89','2025',          'Timothy Lee','46.29','2022',           'Ethan Reines','48.15','2026'],
-      ['200 Free',  'Richard Poplawski','1:41.85','2021', 'Chase Kim','1:43.56','2026',           'Timothy Lee','1:43.82','2022'],
-      ['500 Free',  'Ethan Reines','4:30.88','2026',      'Richard Poplawski','4:32.81','2021',   'Timothy Lee','4:34.86','2022'],
-      ['1000 Free', 'Timothy Lee','9:23.58','2022',       'Ethan Reines','9:28.33','2026',        'Woori Lee','9:46.02','2022'],
-      ['1650 Free', 'Timothy Lee','15:47.71','2022',      'Ethan Reines','15:48.39','2026',       'Eric Lee','15:58.00','2020'],
-      ['100 Back',  'Ryker Levi','50.84','2025',          'Eric Lee','51.84','2020',              'Matthew Jun','52.01','2024'],
-      ['200 Back',  'Richard Poplawski','1:47.78','2021', 'Eric Lee','1:52.28','2020',            'Yuriel Lee','1:53.39','2024'],
-      ['100 Fly',   'Ryker Levi','49.64','2025',          'Richard Poplawski','50.43','2020',     'Timothy Lee','50.63','2022'],
-      ['200 Fly',   'Richard Poplawski','1:48.61','2021', 'Chase Kim','1:50.88','2026',           'Timothy Lee','1:52.68','2022'],
-      ['100 Breast','Ethan Reines','59.11','2026',        'Connor Hong','59.18','2023',            'Woori Lee','1:00.07','2022'],
-      ['200 Breast','Eric Lee','2:07.42','2020',          'Connor Hong','2:07.77','2023',          'Ethan Reines','2:08.52','2026'],
-      ['200 IM',    'Richard Poplawski','1:50.50','2021', 'Timothy Lee','1:53.89','2022',          'Connor Hong','1:55.51','2023'],
-      ['400 IM',    'Richard Poplawski','3:57.14','2021', 'Ethan Reines','3:59.61','2026',         'Connor Hong','4:05.66','2023'],
-    ],
-  },
-  'scy-girls-14': {
-    label: 'SCY Girls 14 & Under',
-    threeCol: true,
-    rows: [
-      ['50 Free',   'Elizabeth Mulder','24.01','2025',  'Emma Zhang','24.57','2026',           'Labdron Namgyal','24.65','2025'],
-      ['100 Free',  'Chloe Kim','51.63','2022',         'Susie Lee','54.31','2019',            'Rebekah Jung','55.67','2022'],
-      ['200 Free',  'Chloe Kim','1:49.33','2022',       'Ava Lan','1:54.69','2025',            'Susie Lee','1:55.16','2019'],
-      ['500 Free',  'Chloe Kim','4:46.80','2022',       'Ava Lan','4:56.56','2026',            'Susie Lee','4:56.80','2020'],
-      ['1000 Free', 'Chloe Kim','9:50.57','2022',       'Ava Lan','10:09.18','2025',           'Kate Hurst','10:12.92','2020'],
-      ['1650 Free', 'Chloe Kim','16:16.21','2022',      'Kate Hurst','17:01.89','2020',        'Lauren Muller','17:29.81','2021'],
-      ['100 Back',  'Chloe Kim','56.90','2022',         'Susie Lee','56.90','2020',            'Rebekah Jung','58.89','2022'],
-      ['200 Back',  'Chloe Kim','1:59.98','2022',       'Susie Lee','2:03.96','2019',          'Rebekah Jung','2:06.91','2022'],
-      ['100 Fly',   'Chloe Kim','56.94','2022',         'Jessica Sung','57.50','2025',         'Emma Zhang','57.75','2026'],
-      ['200 Fly',   'Chloe Kim','2:02.81','2022',       'Susie Lee','2:05.83','2019',          'Jessica Sung','2:09.26','2025'],
-      ['100 Breast','Stephanie Kim','1:04.06','2024',   'Emma Zhang','1:04.81','2026',         'Madelyn Raguindin','1:06.64','2023'],
-      ['200 Breast','Chloe Kim','2:16.12','2022',       'Madelyn Raguindin','2:20.37','2023',  'Stephanie Kim','2:21.68','2024'],
-      ['200 IM',    'Chloe Kim','2:00.01','2022',       'Emma Zhang','2:06.84','2026',         'Susie Lee','2:07.32','2020'],
-      ['400 IM',    'Chloe Kim','4:13.13','2022',       'Ava Lan','4:27.39','2025',            'Susie Lee','4:28.05','2019'],
-    ],
-  },
-  'lcm-boys-14': {
-    label: 'LCM Boys 14 & Under',
-    threeCol: true,
-    rows: [
-      ['50 Free',   'Timothy Lee','24.44','2022',       'Ryker Levi','24.66','2025',           'Matthew Jun','25.71','2024'],
-      ['100 Free',  'Timothy Lee','53.01','2022',       'Ryker Levi','54.60','2025',           'Matthew Jun','55.21','2024'],
-      ['200 Free',  'Ethan Reines','1:58.18','2026',    'Timothy Lee','1:58.73','2022',        'Richard Poplawski','1:58.82','2020'],
-      ['400 Free',  'Timothy Lee','4:06.98','2022',     'Ethan Reines','4:08.91','2026',       'Richard Poplawski','4:12.84','2021'],
-      ['800 Free',  'Ethan Reines','8:35.01','2025',      'Timothy Lee','8:39.61','2022',        'Justin Yoo','9:01.26','2024'],
-      ['1500 Free', 'Ethan Reines','16:12.64','2026',   'Timothy Lee','16:42.38','2022',       'Caden Cho','17:05.50','2024'],
-      ['100 Back',  'Richard Poplawski','1:00.83','2020','Yuriel Lee','1:00.86','2024',        'Woori Lee','1:01.62','2022'],
-      ['200 Back',  'Richard Poplawski','2:06.12','2021','Ethan Reines','2:10.03','2026',      'Yuriel Lee','2:11.46','2024'],
-      ['100 Fly',   'Richard Poplawski','57.07','2021',  'Ryker Levi','57.88','2025',          'Timothy Lee','58.24','2025'],
-      ['200 Fly',   'Richard Poplawski','2:05.53','2021','Chase Kim','2:07.83','2026',         'Ryker Levi','2:08.65','2025'],
-      ['100 Breast','Connor Hong','1:09.27','2023',      'Eric Lee','1:09.77','2020',          'Woori Lee','1:10.47','2022'],
-      ['200 Breast','Joshua Reines','2:29.62','2023',    'Eric Lee','2:29.94','2023',          'Richard Poplawski','2:31.25','2021'],
-      ['200 IM',    'Richard Poplawski','2:06.42','2021','Woori Lee','2:12.96','2022',         'Ethan Reines','2:14.52','2025'],
-      ['400 IM',    'Richard Poplawski','4:30.31','2021','Ethan Reines','4:37.63','2026',      'Eric Lee','4:43.53','2020'],
-    ],
-  },
-  'lcm-girls-14': {
-    label: 'LCM Girls 14 & Under',
-    threeCol: true,
-    rows: [
-      ['50 Free',   'Chloe Kim','27.72','2022',         'Emma Zhang','28.44','2025',           'Jessica Sung','28.52','2025'],
-      ['100 Free',  'Chloe Kim','59.36','2022',         'Emma Zhang','1:01.73','2025',         'Rebekah Jung','1:01.87','2022'],
-      ['200 Free',  'Chloe Kim','2:04.81','2022',       'Ava Lan','2:09.09','2026',            'Emma Zhang','2:11.40','2025'],
-      ['400 Free',  'Chloe Kim','4:18.60','2022',       'Ava Lan','4:26.15','2026',            'Susie Lee','4:30.82','2019'],
-      ['800 Free',  'Chloe Kim','8:47.86','2022',       'Ava Lan','9:09.68','2026',            'Susie Lee','9:17.66','2020'],
-      ['1500 Free', 'Chloe Kim','16:36.10','2022',      'Ava Lan','17:27.68','2026',           'Lauren Muller','18:23.22','2022'],
-      ['100 Back',  'Chloe Kim','1:05.04','2022',       'Susie Lee','1:07.27','2019',          'Rebekah Jung','1:07.63','2022'],
-      ['200 Back',  'Chloe Kim','2:17.48','2022',       'Susie Lee','2:24.65','2019',          'Rebekah Jung','2:24.69','2022'],
-      ['100 Fly',   'Chloe Kim','1:03.79','2022',       'Jessica Sung','1:04.92','2025',       'Susie Lee','1:05.93','2019'],
-      ['200 Fly',   'Chloe Kim','2:19.50','2022',       'Jessica Sung','2:22.80','2025',       'Susie Lee','2:24.06','2019'],
-      ['100 Breast','Stephanie Kim','1:13.91','2024',   'Emma Zhang','1:13.98','2025',         'Chloe Kim','1:14.87','2022'],
-      ['200 Breast','Chloe Kim','2:38.66','2022',       'Stephanie Kim','2:38.75','2024',      'Madelyn Raguindin','2:44.55','2023'],
-      ['200 IM',    'Chloe Kim','2:18.79','2022',       'Ava Lan','2:25.31','2026',            'Susie Lee','2:25.46','2019'],
-      ['400 IM',    'Chloe Kim','4:51.63','2022',       'Susie Lee','5:04.43','2019',          'Ava Lan','5:06.04','2026'],
-    ],
-  },
-  'scy-men': {
-    label: "SCY Men's Open",
-    threeCol: true,
-    rows: [
-      ['50 Free',   'Timothy Lee','20.54','2024',        'Ryker Levi','20.56','2025',             'Richard Poplawski','20.81','2023'],
-      ['100 Free',  'Ryker Levi','21.18','2025',          'Timothy Lee','21.32','2022',              'Richard Poplawski','21.98','2021'],
-      ['200 Free',  'Timothy Lee','44.71','2024',       'Richard Poplawski','45.18','2023',        'Eric Lee','46.23','2023'],
-      ['500 Free',  'Richard Poplawski','4:28.84','2023','Steven Bendoraitis','4:29.22','2022',    'Christopher Chang','4:29.52','2022'],
-      ['1000 Free', 'Steven Bendoraitis','9:08.65','2022','Eric Lee','9:18.38','2022',             'Raymond Stelmark','9:20.12','2023'],
-      ['1650 Free', 'Steven Bendoraitis','15:17.44','2022','Christopher Chang','15:40.96','2022',  'Richard Poplawski','15:42.14','2023'],
-      ['100 Back',  'Eric Lee','48.69','2023',           'Jacob Kim','49.57','2025',               'Richard Poplawski','49.61','2022'],
-      ['200 Back',  'Eric Lee','1:45.33','2023',         'Richard Poplawski','1:47.02','2022',     'Yuriel Lee','1:49.58','2025'],
-      ['100 Fly',   'Ryker Levi','46.94','2026',         'Richard Poplawski','48.16','2024',       'Harrison Lee','48.96','2025'],
-      ['200 Fly',   'Richard Poplawski','1:46.59','2023','Eric Lee','1:47.49','2022',              'Ryker Levi','1:47.52','2026'],
-      ['100 Breast','Dimitri Melnikov','54.75','2025',   'Doyee Kim','54.91','2024',               'Eric Lee','55.04','2024'],
-      ['200 Breast','Dimitri Melnikov','2:00.26','2025', 'Eric Lee','2:00.62','2022',              'Doyee Kim','2:00.80','2023'],
-      ['200 IM',    'Eric Lee','1:46.66','2023',         'Richard Poplawski','1:47.87','2022',     'Timothy Lee','1:49.61','2025'],
-      ['400 IM',    'Eric Lee','3:49.01','2023',         'Richard Poplawski','3:49.55','2023',     'Timothy Lee','3:58.37','2024'],
-    ],
-  },
-  'scy-women': {
-    label: "SCY Women's Open",
-    threeCol: true,
-    rows: [
-      ['50 Free',   'Chloe Kim','23.28','2025',         'Elizabeth Mulder','23.71','2025',         'Jessica Wolf','23.90','2025'],
-      ['100 Free',  'Jessica Wolf','50.64','2025',      'Chloe Kim','51.42','2023',               'Grace Lee','51.67','2022'],
-      ['200 Free',  'Chloe Kim','1:47.52','2024',       'Kate Hurst','1:47.95','2023',            'Grace Lee','1:51.14','2023'],
-      ['500 Free',  'Chloe Kim','4:42.33','2024',       'Kate Hurst','4:43.46','2023',            'Grace Lee','4:56.20','2023'],
-      ['1000 Free', 'Kate Hurst','9:34.03','2023',      'Chloe Kim','9:42.69','2022',             'Ava Lan','10:08.61','2026'],
-      ['1650 Free', 'Chloe Kim','16:00.21','2024',      'Kate Hurst','16:08.25','2023',           'Grace Lee','16:59.79','2023'],
-      ['100 Back',  'Chloe Kim','54.37','2025',         'Rebekah Jung','56.99','2025',            'Grace Lee','58.95','2023'],
-      ['200 Back',  'Chloe Kim','1:55.33','2024',       'Rebekah Jung','2:02.07','2025',          'Sienna Cho','2:03.04','2026'],
-      ['100 Fly',   'Chloe Kim','53.48','2024',         'Jessica Sung','56.19','2025',            'Kayla Rodriguez','56.93','2023'],
-      ['200 Fly',   'Chloe Kim','1:56.19','2025',       'Kate Hurst','2:00.77','2024',            'Jessica Sung','2:04.17','2025'],
-      ['100 Breast','Kayla Rodriguez','1:02.38','2023', 'Stephanie Kim','1:03.38','2025',         'Chloe Kim','1:03.51','2025'],
-      ['200 Breast','Kayla Rodriguez','2:14.33','2023', 'Stephanie Kim','2:15.43','2025',         'Chloe Kim','2:16.12','2022'],
-      ['200 IM',    'Chloe Kim','1:59.30','2024',       'Kate Hurst','2:03.24','2023',            'Rebekah Jung','2:06.04','2024'],
-      ['400 IM',    'Chloe Kim','4:07.11','2024',       'Kate Hurst','4:14.82','2023',            'Stephanie Kim','4:26.61','2025'],
-    ],
-  },
-  'lcm-men': {
-    label: "LCM Men's Open",
-    threeCol: true,
-    rows: [
-      ['50 Free',   'Richard Poplawski','23.53','2024', 'Timothy Lee','23.82','2024',             'Ryker Levi','23.89','2026'],
-      ['100 Free',  'Timothy Lee','51.75','2024',       'Richard Poplawski','51.81','2024',       'Michael Granin','52.46','2024'],
-      ['200 Free',  'Richard Poplawski','1:51.74','2024','Jacob Kim','1:55.07','2024',            'Timothy Lee','1:55.28','2025'],
-      ['400 Free',  'Steven Bendoraitis','4:01.27','2022','Richard Poplawski','4:01.30','2024',   'Raymond Stelmark','4:02.33','2024'],
-      ['800 Free',  'Steven Bendoraitis','8:15.39','2022','Christopher Chang','8:20.10','2022',   'Richard Poplawski','8:26.94','2023'],
-      ['1500 Free', 'Steven Bendoraitis','15:40.72','2022','Christopher Chang','16:02.03','2022', 'Raymond Stelmark','16:11.10','2024'],
-      ['100 Back',  'Eric Lee','56.89','2023',          'Jacob Kim','57.82','2025',               'Richard Poplawski','58.39','2023'],
-      ['200 Back',  'Eric Lee','2:01.63','2023',        'Richard Poplawski','2:03.33','2024',     'Yuriel Lee','2:08.21','2025'],
-      ['100 Fly',   'Ryker Levi','54.64','2026',        'Richard Poplawski','54.96','2024',       'Timothy Lee','56.34','2025'],
-      ['200 Fly',   'Richard Poplawski','2:01.40','2024','Ryker Levi','2:02.87','2026',           'Eric Lee','2:06.07','2023'],
-      ['100 Breast','Eric Lee','1:04.49','2023',        'Dimitri Melnikov','1:05.18','2024',      'Jason Yi','1:06.03','2022'],
-      ['200 Breast','Joshua Reines','2:20.91','2026',    'Eric Lee','2:21.52','2022',              'Michael Granin','2:23.48','2024'],
-      ['200 IM',    'Richard Poplawski','2:03.26','2024','Eric Lee','2:04.96','2022',             'Timothy Lee','2:08.05','2025'],
-      ['400 IM',    'Richard Poplawski','4:24.52','2024','Eric Lee','4:26.05','2022',             'Joshua Reines','4:33.93','2026'],
-    ],
-  },
-  'lcm-women': {
-    label: "LCM Women's Open",
-    threeCol: true,
-    rows: [
-      ['50 Free',   'Jessie Wolf','27.07','2025',       'Chloe Kim','27.26','2025',               'Grace Lee','27.53','2022'],
-      ['100 Free',  'Kate Hurst','57.27','2024',        'Jessie Wolf','58.36','2025',              'Chloe Kim','58.44','2022'],
-      ['200 Free',  'Kate Hurst','2:00.32','2024',      'Chloe Kim','2:02.85','2025',             'Grace Lee','2:04.83','2023'],
-      ['400 Free',  'Kate Hurst','4:10.89','2024',      'Chloe Kim','4:15.02','2025',             'Kathleen Turano','4:19.53','2025'],
-      ['800 Free',  'Kate Hurst','8:28.92','2024',      'Chloe Kim','8:42.31','2025',             'Kathleen Turano','8:51.43','2025'],
-      ['1500 Free', 'Kate Hurst','16:09.37','2023',     'Chloe Kim','16:22.56','2025',            'Kathleen Turano','16:59.01','2025'],
-      ['100 Back',  'Chloe Kim','1:04.96','2023',       'Rebekah Jung','1:06.14','2024',          'Grace Lee','1:08.52','2024'],
-      ['200 Back',  'Chloe Kim','2:17.40','2025',       'Rebekah Jung','2:23.67','2024',          'Kate Hurst','2:24.37','2023'],
-      ['100 Fly',   'Chloe Kim','1:01.92','2025',       'Kate Hurst','1:04.43','2023',            'Kayla Rodriguez','1:04.68','2025'],
-      ['200 Fly',   'Chloe Kim','2:12.69','2025',       'Kate Hurst','2:17.46','2023',            'Kathleen Turano','2:19.31','2025'],
-      ['100 Breast','Kayla Rodriguez','1:12.54','2025', 'Stephanie Kim','1:13.23','2025',         'Chloe Kim','1:14.87','2022'],
-      ['200 Breast','Chloe Kim','2:35.36','2022',       'Stephanie Kim','2:35.83','2025',         'Kayla Rodriguez','2:35.88','2025'],
-      ['200 IM',    'Chloe Kim','2:16.36','2025',       'Kate Hurst','2:19.35','2024',            'Grace Lee','2:25.89','2023'],
-      ['400 IM',    'Chloe Kim','4:43.32','2025',       'Kate Hurst','4:49.43','2024',            'Kathleen Turano','4:56.38','2025'],
-    ],
-  },
+
+  // ═══════════════════════════════════════════════════════════
+  // SCY BOYS 14 & UNDER
+  // ═══════════════════════════════════════════════════════════
+  'scy-boys-14': buildTable('SCY Boys 14 & Under', [
+    r('50 Free',    p('Ryker Levi',          '21.18',    2025), p('Timothy Lee',         '21.32',    2022), p('Richard Poplawski',  '21.98',    2021)),
+    r('100 Free',   p('Ryker Levi',          '45.89',    2025), p('Timothy Lee',         '46.29',    2022), p('Ethan Reines',       '48.15',    2026)),
+    r('200 Free',   p('Richard Poplawski',   '1:41.85',  2021), p('Chase Kim',           '1:43.56',  2026), p('Timothy Lee',        '1:43.82',  2022)),
+    r('500 Free',   p('Ethan Reines',        '4:30.88',  2026), p('Richard Poplawski',   '4:32.81',  2021), p('Timothy Lee',        '4:34.86',  2022)),
+    r('1000 Free',  p('Timothy Lee',         '9:23.58',  2022), p('Ethan Reines',        '9:28.33',  2026), p('Woori Lee',          '9:46.02',  2022)),
+    r('1650 Free',  p('Timothy Lee',         '15:47.71', 2022), p('Ethan Reines',        '15:48.39', 2026), p('Eric Lee',           '15:58.00', 2020)),
+    r('100 Back',   p('Ryker Levi',          '50.84',    2025), p('Eric Lee',            '51.84',    2020), p('Matthew Jun',        '52.01',    2024)),
+    r('200 Back',   p('Richard Poplawski',   '1:47.78',  2021), p('Eric Lee',            '1:52.28',  2020), p('Yuriel Lee',         '1:53.39',  2024)),
+    r('100 Fly',    p('Ryker Levi',          '49.64',    2025), p('Richard Poplawski',   '50.43',    2020), p('Timothy Lee',        '50.63',    2022)),
+    r('200 Fly',    p('Richard Poplawski',   '1:48.61',  2021), p('Chase Kim',           '1:50.88',  2026), p('Timothy Lee',        '1:52.68',  2022)),
+    r('100 Breast', p('Ethan Reines',        '59.11',    2026), p('Connor Hong',         '59.18',    2023), p('Woori Lee',          '1:00.07',  2022)),
+    r('200 Breast', p('Eric Lee',            '2:07.42',  2020), p('Connor Hong',         '2:07.77',  2023), p('Ethan Reines',       '2:08.52',  2026)),
+    r('200 IM',     p('Richard Poplawski',   '1:50.50',  2021), p('Timothy Lee',         '1:53.89',  2022), p('Connor Hong',        '1:55.51',  2023)),
+    r('400 IM',     p('Richard Poplawski',   '3:57.14',  2021), p('Ethan Reines',        '3:59.61',  2026), p('Connor Hong',        '4:05.66',  2023)),
+  ]),
+
+  // ═══════════════════════════════════════════════════════════
+  // SCY GIRLS 14 & UNDER
+  // ═══════════════════════════════════════════════════════════
+  'scy-girls-14': buildTable('SCY Girls 14 & Under', [
+    r('50 Free',    p('Elizabeth Mulder',  '24.01',    2025), p('Emma Zhang',          '24.57',    2026), p('Labdron Namgyal',    '24.65',    2025)),
+    r('100 Free',   p('Chloe Kim',        '51.63',    2022), p('Susie Lee',           '54.31',    2019), p('Rebekah Jung',       '55.67',    2022)),
+    r('200 Free',   p('Chloe Kim',        '1:49.33',  2022), p('Ava Lan',             '1:54.69',  2025), p('Susie Lee',          '1:55.16',  2019)),
+    r('500 Free',   p('Chloe Kim',        '4:46.80',  2022), p('Ava Lan',             '4:56.56',  2026), p('Susie Lee',          '4:56.80',  2020)),
+    r('1000 Free',  p('Chloe Kim',        '9:50.57',  2022), p('Ava Lan',             '10:09.18', 2025), p('Kate Hurst',         '10:12.92', 2020)),
+    r('1650 Free',  p('Chloe Kim',        '16:16.21', 2022), p('Kate Hurst',          '17:01.89', 2020), p('Lauren Muller',      '17:29.81', 2021)),
+    r('100 Back',   p('Chloe Kim',        '56.90',    2022), p('Susie Lee',           '56.90',    2020), p('Rebekah Jung',       '58.89',    2022)),
+    r('200 Back',   p('Chloe Kim',        '1:59.98',  2022), p('Susie Lee',           '2:03.96',  2019), p('Rebekah Jung',       '2:06.91',  2022)),
+    r('100 Fly',    p('Chloe Kim',        '56.94',    2022), p('Jessica Sung',        '57.50',    2025), p('Emma Zhang',         '57.75',    2026)),
+    r('200 Fly',    p('Chloe Kim',        '2:02.81',  2022), p('Susie Lee',           '2:05.83',  2019), p('Jessica Sung',       '2:09.26',  2025)),
+    r('100 Breast', p('Stephanie Kim',    '1:04.06',  2024), p('Emma Zhang',          '1:04.81',  2026), p('Madelyn Raguindin',  '1:06.64',  2023)),
+    r('200 Breast', p('Chloe Kim',        '2:16.12',  2022), p('Madelyn Raguindin',   '2:20.37',  2023), p('Stephanie Kim',      '2:21.68',  2024)),
+    r('200 IM',     p('Chloe Kim',        '2:00.01',  2022), p('Emma Zhang',          '2:06.84',  2026), p('Susie Lee',          '2:07.32',  2020)),
+    r('400 IM',     p('Chloe Kim',        '4:13.13',  2022), p('Ava Lan',             '4:27.39',  2025), p('Susie Lee',          '4:28.05',  2019)),
+  ]),
+
+  // ═══════════════════════════════════════════════════════════
+  // LCM BOYS 14 & UNDER
+  // ═══════════════════════════════════════════════════════════
+  'lcm-boys-14': buildTable('LCM Boys 14 & Under', [
+    r('50 Free',    p('Timothy Lee',         '24.44',    2022), p('Ryker Levi',          '24.66',    2025), p('Matthew Jun',        '25.71',    2024)),
+    r('100 Free',   p('Timothy Lee',         '53.01',    2022), p('Ryker Levi',          '54.60',    2025), p('Matthew Jun',        '55.21',    2024)),
+    r('200 Free',   p('Ethan Reines',        '1:58.18',  2026), p('Timothy Lee',         '1:58.73',  2022), p('Richard Poplawski',  '1:58.82',  2020)),
+    r('400 Free',   p('Timothy Lee',         '4:06.98',  2022), p('Ethan Reines',        '4:08.91',  2026), p('Richard Poplawski',  '4:12.84',  2021)),
+    r('800 Free',   p('Ethan Reines',        '8:35.01',  2025), p('Timothy Lee',         '8:39.61',  2022), p('Justin Yoo',         '9:01.26',  2024)),
+    r('1500 Free',  p('Ethan Reines',        '16:12.64', 2026), p('Timothy Lee',         '16:42.38', 2022), p('Caden Cho',          '17:05.50', 2024)),
+    r('100 Back',   p('Richard Poplawski',   '1:00.83',  2020), p('Yuriel Lee',          '1:00.86',  2024), p('Woori Lee',          '1:01.62',  2022)),
+    r('200 Back',   p('Richard Poplawski',   '2:06.12',  2021), p('Ethan Reines',        '2:10.03',  2026), p('Yuriel Lee',         '2:11.46',  2024)),
+    r('100 Fly',    p('Richard Poplawski',   '57.07',    2021), p('Ryker Levi',          '57.88',    2025), p('Timothy Lee',        '58.24',    2025)),
+    r('200 Fly',    p('Richard Poplawski',   '2:05.53',  2021), p('Chase Kim',           '2:07.83',  2026), p('Ryker Levi',         '2:08.65',  2025)),
+    r('100 Breast', p('Connor Hong',         '1:09.27',  2023), p('Eric Lee',            '1:09.77',  2020), p('Woori Lee',          '1:10.47',  2022)),
+    r('200 Breast', p('Joshua Reines',       '2:29.62',  2023), p('Eric Lee',            '2:29.94',  2023), p('Richard Poplawski',  '2:31.25',  2021)),
+    r('200 IM',     p('Richard Poplawski',   '2:06.42',  2021), p('Woori Lee',           '2:12.96',  2022), p('Ethan Reines',       '2:14.52',  2025)),
+    r('400 IM',     p('Richard Poplawski',   '4:30.31',  2021), p('Ethan Reines',        '4:37.63',  2026), p('Eric Lee',           '4:43.53',  2020)),
+  ]),
+
+  // ═══════════════════════════════════════════════════════════
+  // LCM GIRLS 14 & UNDER
+  // ═══════════════════════════════════════════════════════════
+  'lcm-girls-14': buildTable('LCM Girls 14 & Under', [
+    r('50 Free',    p('Chloe Kim',      '27.72',    2022), p('Emma Zhang',        '28.44',    2025), p('Jessica Sung',       '28.52',    2025)),
+    r('100 Free',   p('Chloe Kim',      '59.36',    2022), p('Emma Zhang',        '1:01.73',  2025), p('Rebekah Jung',       '1:01.87',  2022)),
+    r('200 Free',   p('Chloe Kim',      '2:04.81',  2022), p('Ava Lan',           '2:09.09',  2026), p('Emma Zhang',         '2:11.40',  2025)),
+    r('400 Free',   p('Chloe Kim',      '4:18.60',  2022), p('Ava Lan',           '4:26.15',  2026), p('Susie Lee',          '4:30.82',  2019)),
+    r('800 Free',   p('Chloe Kim',      '8:47.86',  2022), p('Ava Lan',           '9:09.68',  2026), p('Susie Lee',          '9:17.66',  2020)),
+    r('1500 Free',  p('Chloe Kim',      '16:36.10', 2022), p('Ava Lan',           '17:27.68', 2026), p('Lauren Muller',      '18:23.22', 2022)),
+    r('100 Back',   p('Chloe Kim',      '1:05.04',  2022), p('Susie Lee',         '1:07.27',  2019), p('Rebekah Jung',       '1:07.63',  2022)),
+    r('200 Back',   p('Chloe Kim',      '2:17.48',  2022), p('Susie Lee',         '2:24.65',  2019), p('Rebekah Jung',       '2:24.69',  2022)),
+    r('100 Fly',    p('Chloe Kim',      '1:03.79',  2022), p('Jessica Sung',      '1:04.92',  2025), p('Susie Lee',          '1:05.93',  2019)),
+    r('200 Fly',    p('Chloe Kim',      '2:19.50',  2022), p('Jessica Sung',      '2:22.80',  2025), p('Susie Lee',          '2:24.06',  2019)),
+    r('100 Breast', p('Stephanie Kim',  '1:13.91',  2024), p('Emma Zhang',        '1:13.98',  2025), p('Chloe Kim',          '1:14.87',  2022)),
+    r('200 Breast', p('Chloe Kim',      '2:38.66',  2022), p('Stephanie Kim',     '2:38.75',  2024), p('Madelyn Raguindin',  '2:44.55',  2023)),
+    r('200 IM',     p('Chloe Kim',      '2:18.79',  2022), p('Ava Lan',           '2:25.31',  2026), p('Susie Lee',          '2:25.46',  2019)),
+    r('400 IM',     p('Chloe Kim',      '4:51.63',  2022), p('Susie Lee',         '5:04.43',  2019), p('Ava Lan',            '5:06.04',  2026)),
+  ]),
+
+  // ═══════════════════════════════════════════════════════════
+  // SCY MEN'S OPEN
+  // ═══════════════════════════════════════════════════════════
+  'scy-men': buildTable("SCY Men's Open", [
+    r('50 Free',    p('Timothy Lee',         '20.54',    2024), p('Ryker Levi',          '20.56',    2025), p('Richard Poplawski',    '20.81',    2023)),
+    r('100 Free',   p('Ryker Levi',          '21.18',    2025), p('Timothy Lee',         '21.32',    2022), p('Richard Poplawski',    '21.98',    2021)),
+    r('200 Free',   p('Timothy Lee',         '44.71',    2024), p('Richard Poplawski',   '45.18',    2023), p('Eric Lee',             '46.23',    2023)),
+    r('500 Free',   p('Richard Poplawski',   '4:28.84',  2023), p('Steven Bendoraitis',  '4:29.22',  2022), p('Christopher Chang',    '4:29.52',  2022)),
+    r('1000 Free',  p('Steven Bendoraitis',  '9:08.65',  2022), p('Eric Lee',            '9:18.38',  2022), p('Raymond Stelmark',     '9:20.12',  2023)),
+    r('1650 Free',  p('Steven Bendoraitis',  '15:17.44', 2022), p('Christopher Chang',   '15:40.96', 2022), p('Richard Poplawski',    '15:42.14', 2023)),
+    r('100 Back',   p('Eric Lee',            '48.69',    2023), p('Jacob Kim',           '49.57',    2025), p('Richard Poplawski',    '49.61',    2022)),
+    r('200 Back',   p('Eric Lee',            '1:45.33',  2023), p('Richard Poplawski',   '1:47.02',  2022), p('Yuriel Lee',           '1:49.58',  2025)),
+    r('100 Fly',    p('Ryker Levi',          '46.94',    2026), p('Richard Poplawski',   '48.16',    2024), p('Harrison Lee',         '48.96',    2025)),
+    r('200 Fly',    p('Richard Poplawski',   '1:46.59',  2023), p('Eric Lee',            '1:47.49',  2022), p('Ryker Levi',           '1:47.52',  2026)),
+    r('100 Breast', p('Dimitri Melnikov',    '54.75',    2025), p('Doyee Kim',           '54.91',    2024), p('Eric Lee',             '55.04',    2024)),
+    r('200 Breast', p('Dimitri Melnikov',    '2:00.26',  2025), p('Eric Lee',            '2:00.62',  2022), p('Doyee Kim',            '2:00.80',  2023)),
+    r('200 IM',     p('Eric Lee',            '1:46.66',  2023), p('Richard Poplawski',   '1:47.87',  2022), p('Timothy Lee',          '1:49.61',  2025)),
+    r('400 IM',     p('Eric Lee',            '3:49.01',  2023), p('Richard Poplawski',   '3:49.55',  2023), p('Timothy Lee',          '3:58.37',  2024)),
+  ]),
+
+  // ═══════════════════════════════════════════════════════════
+  // SCY WOMEN'S OPEN
+  // ═══════════════════════════════════════════════════════════
+  'scy-women': buildTable("SCY Women's Open", [
+    r('50 Free',    p('Chloe Kim',         '23.28',    2025), p('Elizabeth Mulder',  '23.71',    2025), p('Jessica Wolf',       '23.90',    2025)),
+    r('100 Free',   p('Jessica Wolf',      '50.64',    2025), p('Chloe Kim',         '51.42',    2023), p('Grace Lee',          '51.67',    2022)),
+    r('200 Free',   p('Chloe Kim',         '1:47.52',  2024), p('Kate Hurst',        '1:47.95',  2023), p('Grace Lee',          '1:51.14',  2023)),
+    r('500 Free',   p('Chloe Kim',         '4:42.33',  2024), p('Kate Hurst',        '4:43.46',  2023), p('Grace Lee',          '4:56.20',  2023)),
+    r('1000 Free',  p('Kate Hurst',        '9:34.03',  2023), p('Chloe Kim',         '9:42.69',  2022), p('Ava Lan',            '10:08.61', 2026)),
+    r('1650 Free',  p('Chloe Kim',         '16:00.21', 2024), p('Kate Hurst',        '16:08.25', 2023), p('Grace Lee',          '16:59.79', 2023)),
+    r('100 Back',   p('Chloe Kim',         '54.37',    2025), p('Rebekah Jung',      '56.99',    2025), p('Grace Lee',          '58.95',    2023)),
+    r('200 Back',   p('Chloe Kim',         '1:55.33',  2024), p('Rebekah Jung',      '2:02.07',  2025), p('Sienna Cho',         '2:03.04',  2026)),
+    r('100 Fly',    p('Chloe Kim',         '53.48',    2024), p('Jessica Sung',      '56.19',    2025), p('Kayla Rodriguez',    '56.93',    2023)),
+    r('200 Fly',    p('Chloe Kim',         '1:56.19',  2025), p('Kate Hurst',        '2:00.77',  2024), p('Jessica Sung',       '2:04.17',  2025)),
+    r('100 Breast', p('Kayla Rodriguez',   '1:02.38',  2023), p('Stephanie Kim',     '1:03.38',  2025), p('Chloe Kim',          '1:03.51',  2025)),
+    r('200 Breast', p('Kayla Rodriguez',   '2:14.33',  2023), p('Stephanie Kim',     '2:15.43',  2025), p('Chloe Kim',          '2:16.12',  2022)),
+    r('200 IM',     p('Chloe Kim',         '1:59.30',  2024), p('Kate Hurst',        '2:03.24',  2023), p('Rebekah Jung',       '2:06.04',  2024)),
+    r('400 IM',     p('Chloe Kim',         '4:07.11',  2024), p('Kate Hurst',        '4:14.82',  2023), p('Stephanie Kim',      '4:26.61',  2025)),
+  ]),
+
+  // ═══════════════════════════════════════════════════════════
+  // LCM MEN'S OPEN
+  // ═══════════════════════════════════════════════════════════
+  'lcm-men': buildTable("LCM Men's Open", [
+    r('50 Free',    p('Richard Poplawski',   '23.53',    2024), p('Timothy Lee',         '23.82',    2024), p('Ryker Levi',           '23.89',    2026)),
+    r('100 Free',   p('Timothy Lee',         '51.75',    2024), p('Richard Poplawski',   '51.81',    2024), p('Michael Granin',       '52.46',    2024)),
+    r('200 Free',   p('Richard Poplawski',   '1:51.74',  2024), p('Jacob Kim',           '1:55.07',  2024), p('Timothy Lee',          '1:55.28',  2025)),
+    r('400 Free',   p('Steven Bendoraitis',  '4:01.27',  2022), p('Richard Poplawski',   '4:01.30',  2024), p('Raymond Stelmark',     '4:02.33',  2024)),
+    r('800 Free',   p('Steven Bendoraitis',  '8:15.39',  2022), p('Christopher Chang',   '8:20.10',  2022), p('Richard Poplawski',    '8:26.94',  2023)),
+    r('1500 Free',  p('Steven Bendoraitis',  '15:40.72', 2022), p('Christopher Chang',   '16:02.03', 2022), p('Raymond Stelmark',     '16:11.10', 2024)),
+    r('100 Back',   p('Eric Lee',            '56.89',    2023), p('Jacob Kim',           '57.82',    2025), p('Richard Poplawski',    '58.39',    2023)),
+    r('200 Back',   p('Eric Lee',            '2:01.63',  2023), p('Richard Poplawski',   '2:03.33',  2024), p('Yuriel Lee',           '2:08.21',  2025)),
+    r('100 Fly',    p('Ryker Levi',          '54.64',    2026), p('Richard Poplawski',   '54.96',    2024), p('Timothy Lee',          '56.34',    2025)),
+    r('200 Fly',    p('Richard Poplawski',   '2:01.40',  2024), p('Ryker Levi',          '2:02.87',  2026), p('Eric Lee',             '2:06.07',  2023)),
+    r('100 Breast', p('Eric Lee',            '1:04.49',  2023), p('Dimitri Melnikov',    '1:05.18',  2024), p('Jason Yi',             '1:06.03',  2022)),
+    r('200 Breast', p('Joshua Reines',       '2:20.91',  2026), p('Eric Lee',            '2:21.52',  2022), p('Michael Granin',       '2:23.48',  2024)),
+    r('200 IM',     p('Richard Poplawski',   '2:03.26',  2024), p('Eric Lee',            '2:04.96',  2022), p('Timothy Lee',          '2:08.05',  2025)),
+    r('400 IM',     p('Richard Poplawski',   '4:24.52',  2024), p('Eric Lee',            '4:26.05',  2022), p('Joshua Reines',        '4:33.93',  2026)),
+  ]),
+
+  // ═══════════════════════════════════════════════════════════
+  // LCM WOMEN'S OPEN
+  // ═══════════════════════════════════════════════════════════
+  'lcm-women': buildTable("LCM Women's Open", [
+    r('50 Free',    p('Jessie Wolf',       '27.07',    2025), p('Chloe Kim',         '27.26',    2025), p('Grace Lee',          '27.53',    2022)),
+    r('100 Free',   p('Kate Hurst',        '57.27',    2024), p('Jessie Wolf',       '58.36',    2025), p('Chloe Kim',          '58.44',    2022)),
+    r('200 Free',   p('Kate Hurst',        '2:00.32',  2024), p('Chloe Kim',         '2:02.85',  2025), p('Grace Lee',          '2:04.83',  2023)),
+    r('400 Free',   p('Kate Hurst',        '4:10.89',  2024), p('Chloe Kim',         '4:15.02',  2025), p('Kathleen Turano',    '4:19.53',  2025)),
+    r('800 Free',   p('Kate Hurst',        '8:28.92',  2024), p('Chloe Kim',         '8:42.31',  2025), p('Kathleen Turano',    '8:51.43',  2025)),
+    r('1500 Free',  p('Kate Hurst',        '16:09.37', 2023), p('Chloe Kim',         '16:22.56', 2025), p('Kathleen Turano',    '16:59.01', 2025)),
+    r('100 Back',   p('Chloe Kim',         '1:04.96',  2023), p('Rebekah Jung',      '1:06.14',  2024), p('Grace Lee',          '1:08.52',  2024)),
+    r('200 Back',   p('Chloe Kim',         '2:17.40',  2025), p('Rebekah Jung',      '2:23.67',  2024), p('Kate Hurst',         '2:24.37',  2023)),
+    r('100 Fly',    p('Chloe Kim',         '1:01.92',  2025), p('Kate Hurst',        '1:04.43',  2023), p('Kayla Rodriguez',    '1:04.68',  2025)),
+    r('200 Fly',    p('Chloe Kim',         '2:12.69',  2025), p('Kate Hurst',        '2:17.46',  2023), p('Kathleen Turano',    '2:19.31',  2025)),
+    r('100 Breast', p('Kayla Rodriguez',   '1:12.54',  2025), p('Stephanie Kim',     '1:13.23',  2025), p('Chloe Kim',          '1:14.87',  2022)),
+    r('200 Breast', p('Chloe Kim',         '2:35.36',  2022), p('Stephanie Kim',     '2:35.83',  2025), p('Kayla Rodriguez',    '2:35.88',  2025)),
+    r('200 IM',     p('Chloe Kim',         '2:16.36',  2025), p('Kate Hurst',        '2:19.35',  2024), p('Grace Lee',          '2:25.89',  2023)),
+    r('400 IM',     p('Chloe Kim',         '4:43.32',  2025), p('Kate Hurst',        '4:49.43',  2024), p('Kathleen Turano',    '4:56.38',  2025)),
+  ]),
 }
 
 const CDN = 'https://images.squarespace-cdn.com/content/v1/613a5c22540e534e72bda9a1/'
