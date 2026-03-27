@@ -11,6 +11,9 @@ const LINKS = [
   { label: 'Contact',    page: 'contact' },
 ]
 
+const HomeIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+)
 const InstagramIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
 )
@@ -45,14 +48,25 @@ export default function Nav({ page, setPage, goToBooking }) {
     <>
       {/* Top bar — hamburger left, social icons right */}
       <nav className={`nav${scrolled || page !== 'home' ? ' scrolled' : ''}`} style={menuOpen ? { background: '#0c1a33', backdropFilter: 'none' } : {}}>
-        <button
-          className="nav-hamburger"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-        >
-          <span className={`hamburger-line${menuOpen ? ' open' : ''}`} />
-          <span className={`hamburger-line${menuOpen ? ' open' : ''}`} />
-        </button>
+        <div className="nav-left">
+          <button
+            className="nav-hamburger"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          >
+            <span className={`hamburger-line${menuOpen ? ' open' : ''}`} />
+            <span className={`hamburger-line${menuOpen ? ' open' : ''}`} />
+          </button>
+          {page !== 'home' && (
+            <button
+              className="nav-home-btn"
+              onClick={() => { setPage('home'); setMenuOpen(false) }}
+              aria-label="Home"
+            >
+              <HomeIcon />
+            </button>
+          )}
+        </div>
         <div className="nav-social">
           <a href="https://www.instagram.com/philkangg/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><InstagramIcon /></a>
           <a href="mailto:Philip.jkang@gmail.com" aria-label="Email"><EmailIcon /></a>
