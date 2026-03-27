@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { cancelBooking, createBooking, fetchAvailability, lookupBookings, getUploadUrl, uploadToDrive, linkVideo } from '../lib/bookingClient'
+import { cancelBooking, createBooking, fetchAvailability, lookupBookings, uploadVideo } from '../lib/bookingClient'
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -323,15 +323,9 @@ export default function BookingCalendar({ cancelParams, onCancelParamsUsed }) {
     setUploadError('')
     try {
       const fileName = `${clientName} - ${dateStr} - ${file.name}`
-      const urlData = await getUploadUrl(fileName, file.size, file.type || 'video/mp4')
-      if (!urlData.success) throw new Error(urlData.error || 'Could not start upload.')
-
-      const driveRes = await uploadToDrive(urlData.uploadUrl, file, setUploadProgress)
+      const result = await uploadVideo(fileName, bookingId, file, setUploadProgress)
+      if (!result.success) throw new Error(result.error || 'Upload failed.')
       setUploadProgress(101)
-
-      if (driveRes?.id) {
-        await linkVideo(driveRes.id, bookingId)
-      }
     } catch (e) {
       setUploadProgress(-2)
       setUploadError(e.message || 'Upload failed. Please email your video to peakaquaticsports@gmail.com.')

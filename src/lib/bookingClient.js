@@ -55,59 +55,37 @@ export async function createBooking(payload) {
   return readJson(res)
 }
 
-export async function getUploadUrl(fileName, fileSize, contentType) {
+export async function uploadVideo(fileName, bookingId, file, onProgress) {
+  const MAX_SIZE = 25 * 1024 * 1024 // 25 MB
+  if (file.size > MAX_SIZE) {
+    return { success: false, error: 'Video must be under 25 MB. Please compress it or email it to peakaquaticsports@gmail.com.' }
+  }
+
+  // Read file as base64
+  const base64 = await new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result.split(',')[1])
+    reader.onerror = () => reject(new Error('Could not read file'))
+    reader.onprogress = (e) => {
+      if (e.lengthComputable && onProgress) onProgress(Math.round((e.loaded / e.total) * 50))
+    }
+    reader.readAsDataURL(file)
+  })
+
+  if (onProgress) onProgress(60)
+
   const res = await fetch(SHEETS_API, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify({
-      action: 'uploadUrl',
+      action: 'uploadVideo',
       fileName,
-      fileSize,
-      contentType,
-      origin: window.location.origin,
-    }),
-  })
-  return readJson(res)
-}
-
-export function uploadToDrive(uploadUrl, file, onProgress) {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest()
-    xhr.open('PUT', uploadUrl)
-    xhr.setRequestHeader('Content-Type', file.type || 'video/mp4')
-
-    xhr.upload.onprogress = (e) => {
-      if (e.lengthComputable && onProgress) {
-        onProgress(Math.round((e.loaded / e.total) * 100))
-      }
-    }
-
-    xhr.onload = () => {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        try {
-          resolve(JSON.parse(xhr.responseText))
-        } catch {
-          resolve({ id: null })
-        }
-      } else {
-        reject(new Error('Upload failed with status ' + xhr.status))
-      }
-    }
-
-    xhr.onerror = () => reject(new Error('Upload network error'))
-    xhr.send(file)
-  })
-}
-
-export async function linkVideo(fileId, bookingId) {
-  const res = await fetch(SHEETS_API, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify({
-      action: 'linkVideo',
-      fileId,
       bookingId,
+      videoBase64: base64,
+      contentType: file.type || 'video/mp4',
     }),
   })
+
+  if (onProgress) onProgress(95)
   return readJson(res)
 }
