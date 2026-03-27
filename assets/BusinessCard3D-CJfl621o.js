@@ -1,4 +1,4 @@
-import{r as Pi,j as mr}from"./index-DEg7S6UG.js";/**
+import{r as Pi,j as mr}from"./index-Dw4u3ZwS.js";/**
  * @license
  * Copyright 2010-2026 Three.js Authors
  * SPDX-License-Identifier: MIT
