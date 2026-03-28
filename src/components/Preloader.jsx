@@ -13,8 +13,8 @@ export default function Preloader({ onComplete }) {
   useEffect(() => {
     const t1 = setTimeout(() => setPhase('title'), 1200)
     const t2 = setTimeout(() => setPhase('tagline'), 2300)
-    const t3 = setTimeout(() => setPhase('reveal'), 3300)
-    const t4 = setTimeout(() => { setPhase('done'); onComplete?.() }, 3900)
+    const t3 = setTimeout(() => setPhase('reveal'), 3700)
+    const t4 = setTimeout(() => { setPhase('done'); onComplete?.() }, 4300)
     timeouts.current = [t1, t2, t3, t4]
     return () => timeouts.current.forEach(clearTimeout)
   }, [onComplete])
