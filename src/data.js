@@ -1,5 +1,5 @@
 export const TICKER_ITEMS = [
-  ['Chloe Kim', '4th place, World Junior Championships 2025'],
+  ['Chloe Kim', '4th place, World Junior Aquatics Championships 2025'],
   ['Timothy Lee', 'Commits to Harvard University'],
   ['Kate Hurst', 'USA National Team 2024–2025'],
   ['Jacob Kim', 'Commits to Carnegie Mellon'],

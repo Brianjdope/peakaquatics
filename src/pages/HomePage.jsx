@@ -14,7 +14,7 @@ const ATHLETE_SLIDES = [
     img: '/peakaquatics1/photos/chloe-kim-v3.jpg',
     label: 'PRINCETON UNIVERSITY',
     title: 'CHLOE KIM',
-    subtitle: '4th Place, World Junior Championships 2025',
+    subtitle: '4th Place, World Junior Aquatics Championships 2025',
     bgPosition: 'center 30%',
   },
   {
