@@ -75,6 +75,7 @@ export default function RecordsPage() {
                         width: 88, height: 88, borderRadius: '50%',
                         objectFit: 'cover', objectPosition: 'center 20%',
                         marginBottom: '0.75rem', border: '2px solid var(--accent)',
+                        ...r.photoStyle,
                       }}
                     />
                   )}
