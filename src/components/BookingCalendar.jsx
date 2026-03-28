@@ -193,7 +193,7 @@ export default function BookingCalendar({ cancelParams, onCancelParamsUsed }) {
   const daysInMonth = getDaysInMonth(currentYear, currentMonth)
   const firstDay = getFirstDayOfMonth(currentYear, currentMonth)
   const isMonday = selectedDate && new Date(currentYear, currentMonth, selectedDate).getDay() === 1
-  const MONDAY_HIDDEN = ['9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '1:00 PM']
+  const MONDAY_HIDDEN = ['9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '1:00 PM']
   const availableSlots = TIME_SLOTS.filter(t => !bookedTimes.includes(t) && !(isMonday && MONDAY_HIDDEN.includes(t)))
 
   const prevMonth = () => {
