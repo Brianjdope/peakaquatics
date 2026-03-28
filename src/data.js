@@ -781,6 +781,7 @@ export const RECORDS_TABLES = {
     r('1500 Free',  p('Steven Bendoraitis',  '15:40.72', 2022), p('Christopher Chang',   '16:02.03', 2022), p('Raymond Stelmark',     '16:11.10', 2024)),
     r('100 Back',   p('Eric Lee',            '56.89',    2023), p('Jacob Kim',           '57.82',    2025), p('Richard Poplawski',    '58.39',    2023)),
     r('200 Back',   p('Eric Lee',            '2:01.63',  2023), p('Richard Poplawski',   '2:03.33',  2024), p('Yuriel Lee',           '2:08.21',  2025)),
+    r('50 Fly',     p('Ryker Levi',          '24.69',    2026), p('',                    '',         ''),    p('',                    '',         '')),
     r('100 Fly',    p('Ryker Levi',          '54.64',    2026), p('Richard Poplawski',   '54.96',    2024), p('Timothy Lee',          '56.34',    2025)),
     r('200 Fly',    p('Richard Poplawski',   '2:01.40',  2024), p('Ryker Levi',          '2:02.87',  2026), p('Eric Lee',             '2:06.07',  2023)),
     r('100 Breast', p('Eric Lee',            '1:04.49',  2023), p('Dimitri Melnikov',    '1:05.18',  2024), p('Jason Yi',             '1:06.03',  2022)),
