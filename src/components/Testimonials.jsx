@@ -42,7 +42,7 @@ export default function Testimonials() {
             <div className="testimonial-card" key={i}>
               {t.image && (
                 <div className="testimonial-avatar">
-                  <img src={t.image} alt={t.name} />
+                  <img src={t.image} alt={t.name} style={t.imageStyle} />
                 </div>
               )}
               <div className="testimonial-quote-mark">"</div>

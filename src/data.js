@@ -847,6 +847,7 @@ export const TESTIMONIALS = [
     name: 'Eric Lee',
     school: 'Harvard University',
     image: '/peakaquatics1/athletes/eric-lee.webp',
+    imageStyle: { objectPosition: 'top' },
   },
   {
     quote: "Working with Coach Phil over the past five years has been a unique experience. I started as a scrawny eighth grader with poor technique. Coach Phil developed my strokes to allow me to swim at a higher level. His elite coaching style and attention to detail transformed me as an athlete. I am now committed to swim at Colgate University at the division 1 level. Coach Phil's support impacted me tremendously and I hope he can continue to inspire and motivate future swimmers for years to come.",
