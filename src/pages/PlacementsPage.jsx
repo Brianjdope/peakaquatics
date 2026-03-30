@@ -42,6 +42,7 @@ export default function PlacementsPage() {
                         src={p.photo}
                         alt={p.name}
                         className="placement-photo-img"
+                        style={p.photoStyle}
                         onError={e => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'flex' }}
                       />
                     ) : null}
@@ -87,7 +88,7 @@ export default function PlacementsPage() {
                 <div className="testimonial-card" key={i}>
                   {t.image && (
                     <div className="testimonial-avatar">
-                      <img src={t.image} alt={t.name} />
+                      <img src={t.image} alt={t.name} style={t.imageStyle} />
                     </div>
                   )}
                   <div className="testimonial-quote-mark">"</div>
