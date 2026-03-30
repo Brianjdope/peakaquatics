@@ -966,7 +966,7 @@ export const FAQS = [
 
 export const CONTACT_INFO = {
   location: '24 Hour Fitness Ramsey\n150 Triangle Plaza\nRamsey, NJ 07446',
-  email: 'Philip.jkang@gmail.com',
+  email: 'peakaquaticsports@gmail.com',
   instagram: '@philkangg',
   hours: [
     { season: 'Regular Season', weekday: 'Mon – Fri: 3:30 pm – 9:30 pm', weekend: 'Sat – Sun: 12:00 pm – 6:00 pm' },
