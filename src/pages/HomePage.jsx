@@ -287,7 +287,7 @@ export default function HomePage({ setPage, goToBooking }) {
             <p className="section-label">Our Approach</p>
             <h2 style={{ marginBottom:'1.2rem', marginTop:'0.5rem' }}>Coaching That<br />Gets Results</h2>
             <p style={{ color: 'var(--muted)', marginBottom:'2rem', maxWidth: '420px', lineHeight: 1.7 }}>
-              Race strategy, and video analysis to give every swimmer an advantage in the pool and the recruiting process.
+              We combine elite stroke technique, race strategy and video analysis to give our swimmers an advantage in the pool and in the recruitment process.
             </p>
             <button className="btn btn-solid" onClick={goToBooking}>Book a Session</button>
           </RevealSection>
