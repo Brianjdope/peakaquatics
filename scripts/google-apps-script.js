@@ -44,6 +44,7 @@ function doPost(e) {
     if (data.action === 'book')      return jsonResponse(handleBooking(data))
     if (data.action === 'cancel')    return jsonResponse(handleCancellation(data))
     if (data.action === 'uploadVideo')  return jsonResponse(handleVideoUpload(data))
+    if (data.action === 'getUploadUrl') return jsonResponse(handleGetUploadUrl(data))
     return jsonResponse({ success: false, error: 'Invalid action' })
   } catch (err) {
     return jsonResponse({ success: false, error: 'doPost error: ' + err.message })
@@ -380,6 +381,39 @@ function handleVideoUpload(data) {
   } catch(e) {
     Logger.log('Video upload error: ' + e.message)
     return { success: false, error: 'Upload failed: ' + e.message }
+  }
+}
+
+// =============================================================
+// DIRECT DRIVE UPLOAD — Returns a resumable upload URL (up to 200MB)
+// Requires: Drive API advanced service enabled in Apps Script
+// =============================================================
+function handleGetUploadUrl(data) {
+  if (!data.fileName) {
+    return { success: false, error: 'Missing file name.' }
+  }
+  try {
+    var metadata = {
+      name: data.fileName,
+      mimeType: data.mimeType || 'video/mp4',
+      parents: [DRIVE_FOLDER_ID]
+    }
+    var url = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable'
+    var res = UrlFetchApp.fetch(url, {
+      method: 'post',
+      contentType: 'application/json',
+      headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() },
+      payload: JSON.stringify(metadata),
+      muteHttpExceptions: true
+    })
+    if (res.getResponseCode() !== 200) {
+      return { success: false, error: 'Drive API error: ' + res.getContentText() }
+    }
+    var uploadUrl = res.getHeaders()['Location'] || res.getHeaders()['location']
+    return { success: true, uploadUrl: uploadUrl }
+  } catch(e) {
+    Logger.log('getUploadUrl error: ' + e.message)
+    return { success: false, error: 'Failed to get upload URL: ' + e.message }
   }
 }
 
