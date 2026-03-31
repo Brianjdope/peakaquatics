@@ -721,7 +721,7 @@ export const RECORDS_TABLES = {
     r('100 Free',   p('Timothy Lee',         '53.01',    2022), p('Ryker Levi',          '54.60',    2025), p('Matthew Jun',        '55.21',    2024)),
     r('200 Free',   p('Ethan Reines',        '1:58.18',  2026), p('Timothy Lee',         '1:58.73',  2022), p('Richard Poplawski',  '1:58.82',  2020)),
     r('400 Free',   p('Timothy Lee',         '4:06.98',  2022), p('Ethan Reines',        '4:08.91',  2026), p('Richard Poplawski',  '4:12.84',  2021)),
-    r('800 Free',   p('Ethan Reines',        '8:35.01',  2025), p('Timothy Lee',         '8:39.61',  2022), p('Justin Yoo',         '9:01.26',  2024)),
+    r('800 Free',   p('Ethan Reines',        '8:30.27',  2026), p('Timothy Lee',         '8:39.61',  2022), p('Justin Yoo',         '9:01.26',  2024)),
     r('1500 Free',  p('Ethan Reines',        '16:12.64', 2026), p('Timothy Lee',         '16:42.38', 2022), p('Caden Cho',          '17:05.50', 2024)),
     r('100 Back',   p('Richard Poplawski',   '1:00.83',  2020), p('Yuriel Lee',          '1:00.86',  2024), p('Woori Lee',          '1:01.62',  2022)),
     r('200 Back',   p('Richard Poplawski',   '2:06.12',  2021), p('Ethan Reines',        '2:10.03',  2026), p('Yuriel Lee',         '2:11.46',  2024)),
