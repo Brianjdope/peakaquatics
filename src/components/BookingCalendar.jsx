@@ -1071,7 +1071,7 @@ export default function BookingCalendar({ cancelParams, onCancelParamsUsed }) {
                 {[
                   { label: 'Novice',       color: '#34d399', dimBg: 'rgba(52,211,153,0.12)',  dimText: '#34d399' },
                   { label: 'Intermediate', color: '#fbbf24', dimBg: 'rgba(251,191,36,0.12)',  dimText: '#fbbf24' },
-                  { label: 'Advanced',     color: '#ef4444', dimBg: 'rgba(239,68,68,0.12)',   dimText: '#ef4444' },
+                  { label: 'Sectionals+',  color: '#ef4444', dimBg: 'rgba(239,68,68,0.12)',   dimText: '#ef4444' },
                 ].map(({ label, color, dimBg, dimText }) => (
                   <button
                     key={label}
