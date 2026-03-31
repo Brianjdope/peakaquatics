@@ -57,7 +57,6 @@ const SESSION_TYPES = [
   { id: 'private', label: 'Private Session', duration: '1 hr', color: '#34d399' },
   { id: 'semi', label: 'Semi-Group', duration: '1.5 hr', color: '#fbbf24' },
   { id: 'dryland', label: 'Dryland', duration: '1 hr', color: '#ef4444' },
-  { id: 'group', label: 'Group Lessons', duration: '1.5 hr', color: '#f97316' },
 ]
 
 // Recurring weekly schedule — only these time slots are bookable
