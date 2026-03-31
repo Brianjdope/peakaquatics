@@ -211,8 +211,8 @@ export default function ContactPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <p className="section-label">Get In Touch</p>
-              <h2 style={{ marginTop: '0.5rem', marginBottom: '2.5rem' }}>Contact</h2>
+              <p className="section-label">Contact</p>
+              <h2 style={{ marginTop: '0.5rem', marginBottom: '2.5rem' }}>Get In Touch</h2>
 
               {CONTACT_INFO.hours.map((h, i) => (
                 <div key={i} style={{ marginBottom: '1.8rem' }}>
