@@ -837,9 +837,9 @@ export const RECORDS_TABLES = {
 
 const CDN = 'https://images.squarespace-cdn.com/content/v1/613a5c22540e534e72bda9a1/'
 export const PLACEMENTS = [
+  { name: 'Chloe Kim',            school: 'Princeton University',        photo: '/athletes/chloe-kim.webp', photoStyle: { objectPosition: 'center 5%' } },
   { name: 'Kate Hurst',           school: 'University of Texas',         photo: 'https://dxbhsrqyrr690.cloudfront.net/sidearm.nextgen.sites/texassports_com/images/2024/9/4/__0014_Hurst_Kate-2024.jpg', photoStyle: { objectPosition: 'center 10%' } },
   { name: 'Richard Poplawski',    school: 'Harvard University',          photo: '/athletes/richard-poplawski.webp', photoStyle: { objectPosition: 'center 8%' } },
-  { name: 'Chloe Kim',            school: 'Princeton University',        photo: '/athletes/chloe-kim.webp', photoStyle: { objectPosition: 'center 5%' } },
   { name: 'Eric Lee',             school: 'Harvard University',          photo: '/athletes/eric-lee.webp', photoStyle: { objectPosition: 'center 8%' } },
   { name: 'Michael Granin',       school: 'Colgate University',          photo: '/athletes/michael-granin.webp' },
   { name: 'Jessica Wolf',         school: 'Colgate University',          year: '2025', photo: CDN + '1762189818941-1RC3X9NYU3MKFS7ZVMO6/Jessie+Wolf+commits+to+Colgate+University.jpg', photoStyle: { objectPosition: 'center 20%' } },
