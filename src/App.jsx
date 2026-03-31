@@ -11,6 +11,7 @@ import PlacementsPage from './pages/PlacementsPage'
 import ContactPage from './pages/ContactPage'
 import TermsPage from './pages/TermsPage'
 import GalleryPage from './pages/GalleryPage'
+import AdminPage from './pages/AdminPage'
 import InstallAppBanner from './components/InstallAppBanner'
 
 const pageVariants = {
@@ -39,6 +40,11 @@ export default function App() {
   const [scrollPct, setScrollPct] = useState(0)
   const [scrollToBooking, setScrollToBooking] = useState(!!initialCancel)
   const [cancelParams, setCancelParams] = useState(initialCancel)
+
+  // Handle #admin hash route
+  useEffect(() => {
+    if (window.location.hash === '#admin') setPage('admin')
+  }, [])
 
   // Clean up hash after reading it, and handle future hash changes
   useEffect(() => {
@@ -99,6 +105,7 @@ export default function App() {
       case 'contact':    return <ContactPage />
       case 'gallery':    return <GalleryPage />
       case 'terms':      return <TermsPage />
+      case 'admin':      return <AdminPage />
       default:           return <HomePage setPage={setPage} />
     }
   }
