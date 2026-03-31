@@ -212,7 +212,7 @@ export default function ContactPage() {
               transition={{ duration: 0.8 }}
             >
               <p className="section-label">Contact</p>
-              <h2 style={{ marginTop: '0.5rem', marginBottom: '2.5rem' }}>Get In Touch</h2>
+              <h2 style={{ marginTop: '0.5rem', marginBottom: '2.5rem', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)' }}>Get In Touch</h2>
 
               {CONTACT_INFO.hours.map((h, i) => (
                 <div key={i} style={{ marginBottom: '1.8rem' }}>
