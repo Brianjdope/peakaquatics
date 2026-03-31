@@ -66,9 +66,9 @@ const POOL_SESSION_IDS = ['intro', 'video', 'private', 'semi']
 const RECURRING_SCHEDULE = {
   1: [{ time: '1:30 PM', allowedSessions: POOL_SESSION_IDS }],
   2: [{ time: '1:30 PM', allowedSessions: POOL_SESSION_IDS }],
-  3: [{ time: '12:30 PM', allowedSessions: POOL_SESSION_IDS }, { time: '5:05 PM', allowedSessions: ['dryland'] }],
+  3: [{ time: '5:05 AM', allowedSessions: ['dryland'] }, { time: '12:30 PM', allowedSessions: POOL_SESSION_IDS }],
   4: [{ time: '12:30 PM', allowedSessions: POOL_SESSION_IDS }],
-  5: [{ time: '5:05 PM', allowedSessions: ['dryland'] }],
+  5: [{ time: '5:05 AM', allowedSessions: ['dryland'] }],
 }
 
 function isWithin24Hours(dateStr) {
