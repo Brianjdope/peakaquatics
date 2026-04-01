@@ -46,7 +46,7 @@ export const ARTICLES = {
   'ethan-state-record': {
     tag: 'Competition',
     date: 'March 27, 2026',
-    title: 'Ethan Reines Breaks the 13-14 State Record in the 500 Freestyle',
+    title: 'Ethan Reines Breaks the NJ 13-14 State Record in the 500 Yard Freestyle',
     img: 'https://images.squarespace-cdn.com/content/v1/613a5c22540e534e72bda9a1/5c030ab9-385e-42d4-9fe0-dfd038431410/79624924812__79255E09-69B2-4832-8BEE-1511FA5B9790.jpeg',
     imgPos: 'center 40%',
     excerpt: 'Ethan Reines, age 14, breaks the New Jersey State Record in the 500 Freestyle with a time of 4:30.88 at the 2026 NJS & Scarlet 11 & Over Gold Championships.',
