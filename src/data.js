@@ -786,9 +786,9 @@ export const RECORDS_TABLES = {
   // SCY WOMEN'S OPEN
   // ═══════════════════════════════════════════════════════════
   'scy-women': buildTable("SCY Women's Open", [
-    r('50 Free',    p('Chloe Kim',         '23.28',    2025), p('Elizabeth Mulder',  '23.71',    2025), p('Jessica Wolf',       '23.90',    2025)),
-    r('100 Free',   p('Jessica Wolf',      '50.64',    2025), p('Chloe Kim',         '51.42',    2023), p('Grace Lee',          '51.67',    2022)),
-    r('200 Free',   p('Chloe Kim',         '1:47.52',  2024), p('Kate Hurst',        '1:47.95',  2023), p('Grace Lee',          '1:51.14',  2023)),
+    r('50 Free',    p('Chloe Kim',         '23.28',    2025), p('Jessica Wolf',      '23.48',    2026), p('Elizabeth Mulder',   '23.71',    2025)),
+    r('100 Free',   p('Jessica Wolf',      '50.19',    2026), p('Chloe Kim',         '51.42',    2023), p('Grace Lee',          '51.67',    2022)),
+    r('200 Free',   p('Chloe Kim',         '1:47.52',  2024), p('Kate Hurst',        '1:47.95',  2023), p('Jessica Wolf',       '1:50.51',  2026)),
     r('500 Free',   p('Chloe Kim',         '4:42.33',  2024), p('Kate Hurst',        '4:43.46',  2023), p('Grace Lee',          '4:56.20',  2023)),
     r('1000 Free',  p('Kate Hurst',        '9:34.03',  2023), p('Chloe Kim',         '9:42.69',  2022), p('Ava Lan',            '10:08.61', 2026)),
     r('1650 Free',  p('Chloe Kim',         '16:00.21', 2024), p('Kate Hurst',        '16:08.25', 2023), p('Grace Lee',          '16:59.79', 2023)),
