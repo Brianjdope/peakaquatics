@@ -39,7 +39,7 @@ export const ARTICLES = {
       'Day 4 — April 2:',
       'Jessie Wolf posted a personal best of 23.48 in the 50Y Freestyle, placing 12th. Harrison Lee cracked under 21 seconds in the 50Y Freestyle with a 20.98. Jeremiah Rhee went a personal best of 1:52.77 in the 200Y Individual Medley, placing 18th.',
       'Day 5 — April 3:',
-      'Jessie Wolf capped off an incredible meet by placing 2nd at YMCA Nationals in the 100Y Freestyle with a time of 50.19! Leading off the relay, Cole Wilson blasted a best time of 46.07 in the 100Y Freestyle!',
+      'Jessie Wolf capped off an incredible meet by placing 2nd at YMCA Nationals in the 100Y Freestyle with a time of 50.19, earning her first Winter Junior National qualifying time! Leading off the relay, Cole Wilson blasted a best time of 46.07 in the 100Y Freestyle!',
       'Congratulations to all of our athletes on an outstanding week of racing at YMCA Nationals!',
     ],
   },
