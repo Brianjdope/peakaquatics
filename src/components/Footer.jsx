@@ -20,7 +20,7 @@ export default function Footer({ setPage }) {
         <div className="footer-grid">
           <div className="footer-brand">
             <h3>Peak <span>Aquatic</span> Sports</h3>
-            <p>Elite competitive swimming coaching and collegiate recruitment consulting based in Ramsey, NJ.</p>
+            <p>Competitive swim coaching and collegiate recruitment consulting based in Ramsey, NJ.</p>
             <div style={{ marginTop: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
               <a href={`mailto:${CONTACT_INFO.email}`} style={{ fontSize: '0.78rem', color: 'var(--muted)', textDecoration: 'none' }}>{CONTACT_INFO.email}</a>
               <a href="https://instagram.com/philkangg" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.78rem', color: 'var(--muted)', textDecoration: 'none' }}>Instagram: {CONTACT_INFO.instagram}</a>
