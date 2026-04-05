@@ -20,6 +20,29 @@ export const STATS = [
 
 const CDN2 = 'https://images.squarespace-cdn.com/content/v1/613a5c22540e534e72bda9a1/'
 export const ARTICLES = {
+  'ymca-nationals-2026': {
+    tag: 'Competition',
+    date: 'April 3, 2026',
+    title: '2026 YMCA National Short Course Swimming Championships',
+    img: '/photos/ymca-nationals-2026.jpg',
+    imgPos: 'center 20%',
+    excerpt: 'Jessie Wolf places 2nd at YMCA Nationals in the 100Y Freestyle, Cole Wilson blasts a best time of 46.07 in the 100Y Free off the relay, and multiple personal bests highlight an outstanding week in Greensboro.',
+    body: [
+      'March 30 – April 3, 2026 — Greensboro Aquatic Center, Greensboro, NC',
+      'Our athletes delivered an incredible week of racing at the 2026 YMCA National Short Course Swimming Championships, highlighted by a national runner-up finish, relay best times, and a wave of personal bests.',
+      'Day 1 — March 30:',
+      'Jeremiah Rhee opened the meet by splitting a 1:41.14 in the 200Y Freestyle off the relay.',
+      'Day 2 — March 31:',
+      'Jeremiah Rhee posted a personal best of 1:50.60 in the 200Y Backstroke, placing 13th. Harrison Lee delivered a personal best of 48.80 in the 100Y Butterfly, placing 7th. Cole Wilson swam a 51.68 in the 100Y Butterfly, right off his mark. Jessie Wolf swam a 2:08.17 in the 200Y Backstroke.',
+      'Day 3 — April 1:',
+      'Jessie Wolf achieved a personal best of 1:50.51 in the 200Y Freestyle, placing 4th. Cole Wilson went a 1:42.64 in the 200Y Freestyle, right off his personal best. Jeremiah Rhee posted a 3:59.90 in the 400Y Individual Medley, placing 10th.',
+      'Day 4 — April 2:',
+      'Jessie Wolf posted a personal best of 23.48 in the 50Y Freestyle, placing 12th. Harrison Lee cracked under 21 seconds in the 50Y Freestyle with a 20.98. Jeremiah Rhee went a personal best of 1:52.77 in the 200Y Individual Medley, placing 18th.',
+      'Day 5 — April 3:',
+      'Jessie Wolf capped off an incredible meet by placing 2nd at YMCA Nationals in the 100Y Freestyle with a time of 50.19! Leading off the relay, Cole Wilson blasted a best time of 46.07 in the 100Y Freestyle!',
+      'Congratulations to all of our athletes on an outstanding week of racing at YMCA Nationals!',
+    ],
+  },
   'speedo-sectionals-2026': {
     tag: 'Competition',
     date: 'March 29, 2026',
@@ -606,7 +629,8 @@ export const ARTICLES = {
 }
 
 export const NEWS_LIST = [
-  { id: 'speedo-sectionals-2026', featured: true },
+  { id: 'ymca-nationals-2026', featured: true },
+  { id: 'speedo-sectionals-2026' },
   { id: 'ethan-state-record' },
   { id: 'tyr-2026' },
   { id: 'chloe-worlds' },
