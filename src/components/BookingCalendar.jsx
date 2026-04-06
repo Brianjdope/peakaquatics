@@ -63,13 +63,13 @@ const SESSION_TYPES = [
 // Recurring weekly schedule — only these time slots are bookable
 // day-of-week: 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
 // allowedSessions: which session types can be booked at this slot
-const POOL_SESSION_IDS = ['intro', 'video', 'private', 'semi', 'group']
+const POOL_SESSION_IDS = ['video', 'private', 'semi', 'group']
 const RECURRING_SCHEDULE = {
-  1: [{ time: '1:30 PM', allowedSessions: POOL_SESSION_IDS }],
-  2: [{ time: '1:30 PM', allowedSessions: POOL_SESSION_IDS }],
-  3: [{ time: '5:05 AM', allowedSessions: ['dryland'] }, { time: '12:30 PM', allowedSessions: POOL_SESSION_IDS }],
-  4: [{ time: '12:30 PM', allowedSessions: POOL_SESSION_IDS }],
-  5: [{ time: '5:05 AM', allowedSessions: ['dryland'] }],
+  1: [{ time: '9:00 AM', allowedSessions: ['intro'] }, { time: '1:30 PM', allowedSessions: POOL_SESSION_IDS }],
+  2: [{ time: '9:00 AM', allowedSessions: ['intro'] }, { time: '1:30 PM', allowedSessions: POOL_SESSION_IDS }],
+  3: [{ time: '5:05 AM', allowedSessions: ['dryland'] }, { time: '9:00 AM', allowedSessions: ['intro'] }, { time: '12:30 PM', allowedSessions: POOL_SESSION_IDS }],
+  4: [{ time: '9:00 AM', allowedSessions: ['intro'] }, { time: '12:30 PM', allowedSessions: POOL_SESSION_IDS }],
+  5: [{ time: '5:05 AM', allowedSessions: ['dryland'] }, { time: '9:00 AM', allowedSessions: ['intro'] }],
 }
 
 function isWithin24Hours(dateStr) {
