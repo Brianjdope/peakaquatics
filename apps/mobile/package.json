@@ -9,7 +9,7 @@
     "android": "expo run:android"
   },
   "dependencies": {
-    "expo": "^52.0.0",
+    "expo": "^55.0.10-canary-20260327-0789fbc",
     "expo-status-bar": "^2.0.0",
     "react": "^18.3.0",
     "react-native": "^0.76.0"
