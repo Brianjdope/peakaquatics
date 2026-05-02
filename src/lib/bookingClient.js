@@ -1,4 +1,4 @@
-const SHEETS_API = 'https://script.google.com/macros/s/AKfycbxiGm4FBKULvmZVze3IlRYDO741OcmexbSk0-cDpSQhYhoy4X95RE6WIAVw0X7o6tT7/exec'
+const SHEETS_API = 'https://script.google.com/macros/s/AKfycbxXftEZLmAm-vQ4MQi2GZgycipF-JXo4-ZdnxAWT8kuIojrhhvSyP9XjKJh9WzO3a4d/exec'
 
 const FALLBACK_MSG = 'Booking server is unavailable. Please email peakaquaticsports@gmail.com or call 201-359-5688.'
 

@@ -86,7 +86,7 @@ function InstagramFeed() {
   )
 }
 
-export default function GalleryPage() {
+export default function GalleryPage({ setPage }) {
   return (
     <div className="page-wrapper">
       <div className="page-header">
@@ -106,6 +106,40 @@ export default function GalleryPage() {
             transition={{ duration: 0.8, delay: 0.15 }}
           >
             <InstagramFeed />
+          </motion.div>
+
+          {/* Admin access */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            style={{ textAlign: 'center', marginTop: '3rem' }}
+          >
+            <button
+              onClick={() => setPage('admin')}
+              style={{
+                background: 'none',
+                border: '1px solid var(--border)',
+                borderRadius: 8,
+                padding: '0.6rem 1.4rem',
+                color: 'var(--muted)',
+                fontSize: '0.78rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                letterSpacing: '0.03em',
+                transition: 'all 0.2s ease',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = 'var(--accent)'
+                e.currentTarget.style.color = 'var(--accent)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = 'var(--border)'
+                e.currentTarget.style.color = 'var(--muted)'
+              }}
+            >
+              Admin Panel
+            </button>
           </motion.div>
         </div>
       </section>

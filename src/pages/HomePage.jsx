@@ -23,8 +23,8 @@ const ATHLETE_SLIDES = [
     univ: 'Princeton University',
     name: 'Chloe Kim',
     achievement: '4th Place · World Junior Aquatics Championships 2025',
-    bgPosition: 'center 30%',
-    containOnMobile: true,
+    bgPosition: '70% center',
+    bgPositionMobile: '78% center',
     credit: 'Photo by Jack Spitser',
   },
   {
@@ -113,8 +113,12 @@ function AthleteSlide({ slide, onClick }) {
       style={{ cursor: onClick ? 'pointer' : 'default' }}
     >
       <motion.div
-        className={`pas-athlete-bg${slide.containOnMobile ? ' pas-athlete-bg--contain-mobile' : ''}`}
-        style={{ backgroundImage: `url(${slide.img})`, backgroundPosition: slide.bgPosition || 'center' }}
+        className="pas-athlete-bg"
+        style={{
+          backgroundImage: `url(${slide.img})`,
+          backgroundPosition: slide.bgPosition || 'center',
+          '--bg-position-mobile': slide.bgPositionMobile || slide.bgPosition || 'center',
+        }}
         animate={{ scale: inView ? 1 : 1.06 }}
         transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
       />

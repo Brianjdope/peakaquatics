@@ -13,9 +13,9 @@
 // 6. Copy the Web App URL → paste into BookingCalendar.jsx as SHEETS_API
 // 7. After any script change: Deploy → New deployment (never edit existing)
 //
-// COLUMN LAYOUT (A–G):
+// COLUMN LAYOUT (A–H):
 //   A: Day/Time  B: Session  C: Members  D: Skill Level
-//   E: Status    F: Booking ID  G: Email
+//   E: Status    F: Booking ID  G: Email  H: Phone
 // ============================================================
 
 var SHEET_NAME  = 'Sheet1'
@@ -32,6 +32,7 @@ var COL = {
   STATUS:     4,  // E
   BOOKING_ID: 5,  // F
   EMAIL:      6,  // G
+  PHONE:      7,  // H
 }
 
 // =============================================================
@@ -45,6 +46,10 @@ function doPost(e) {
     if (data.action === 'cancel')    return jsonResponse(handleCancellation(data))
     if (data.action === 'uploadVideo')  return jsonResponse(handleVideoUpload(data))
     if (data.action === 'getUploadUrl') return jsonResponse(handleGetUploadUrl(data))
+    if (data.action === 'uploadImage')       return jsonResponse(handleImageUpload(data))
+    if (data.action === 'setInstagramToken') return jsonResponse(handleSetInstagramToken(data))
+    if (data.action === 'postToInstagram')   return jsonResponse(handlePostToInstagram(data))
+    if (data.action === 'getInstagramConfig') return jsonResponse(handleGetInstagramConfig())
     return jsonResponse({ success: false, error: 'Invalid action' })
   } catch (err) {
     return jsonResponse({ success: false, error: 'doPost error: ' + err.message })
@@ -184,6 +189,7 @@ function handleBooking(data) {
     'Confirmed',   // E: Status
     bookingId,     // F: Booking ID
     data.email,    // G: Email
+    data.phone || '',  // H: Phone
   ]
   sheet.appendRow(row)
   var lastRow = sheet.getLastRow()
@@ -427,6 +433,7 @@ function notifyCoach(data, bookingId, dateTime, videoUrl) {
     '',
     'Members:     ' + (data.name || '(not provided)'),
     'Email:       ' + data.email,
+    'Phone:       ' + (data.phone || '(not provided)'),
     'Session:     ' + data.session,
     'Skill Level: ' + (data.skillLevel || ''),
     'Date/Time:   ' + dateTime,
@@ -743,4 +750,160 @@ function generateId() {
 function jsonResponse(data) {
   return ContentService.createTextOutput(JSON.stringify(data))
     .setMimeType(ContentService.MimeType.JSON)
+}
+
+// =============================================================
+// IMAGE UPLOAD — Save image to Drive, return public URL for IG
+// =============================================================
+
+function handleImageUpload(data) {
+  if (!data.imageBase64 || !data.fileName) {
+    return { success: false, error: 'Missing image data or file name.' }
+  }
+
+  try {
+    var folder = DriveApp.getFolderById(DRIVE_FOLDER_ID)
+    var blob = Utilities.newBlob(
+      Utilities.base64Decode(data.imageBase64),
+      data.contentType || 'image/jpeg',
+      data.fileName
+    )
+    var file = folder.createFile(blob)
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW)
+    var imageUrl = 'https://lh3.googleusercontent.com/d/' + file.getId()
+    return { success: true, imageUrl: imageUrl }
+  } catch (e) {
+    Logger.log('Image upload error: ' + e.message)
+    return { success: false, error: 'Upload failed: ' + e.message }
+  }
+}
+
+// =============================================================
+// INSTAGRAM — Server-side posting via Graph API
+// Token stored in Script Properties (not exposed to frontend)
+// =============================================================
+
+var IG_USER_ID = '17841438687144817' // Peak Aquatic Sports IG Business Account ID
+
+/**
+ * Return stored Instagram config (token + user ID) so the client
+ * can call the Graph API directly — avoids UrlFetchApp permission issues.
+ */
+function handleGetInstagramConfig() {
+  var props = PropertiesService.getScriptProperties()
+  var token = props.getProperty('IG_ACCESS_TOKEN')
+  if (!token) {
+    return { success: false, error: 'No Instagram token configured. Use setInstagramToken first.' }
+  }
+  return { success: true, token: token, igUserId: IG_USER_ID }
+}
+
+/**
+ * Save or exchange an Instagram access token.
+ * - If data.shortLivedToken is provided, exchanges it for a 60-day long-lived token.
+ * - If data.longLivedToken is provided, stores it directly.
+ * Requires: Meta App ID and App Secret in Script Properties (IG_APP_ID, IG_APP_SECRET)
+ */
+function handleSetInstagramToken(data) {
+  var props = PropertiesService.getScriptProperties()
+
+  if (data.longLivedToken) {
+    props.setProperty('IG_ACCESS_TOKEN', data.longLivedToken)
+    return { success: true, message: 'Long-lived token saved.' }
+  }
+
+  if (data.shortLivedToken) {
+    var appId     = props.getProperty('IG_APP_ID')
+    var appSecret = props.getProperty('IG_APP_SECRET')
+    if (!appId || !appSecret) {
+      return { success: false, error: 'IG_APP_ID and IG_APP_SECRET must be set in Script Properties first.' }
+    }
+    try {
+      var url = 'https://graph.facebook.com/v19.0/oauth/access_token'
+        + '?grant_type=fb_exchange_token'
+        + '&client_id=' + appId
+        + '&client_secret=' + appSecret
+        + '&fb_exchange_token=' + encodeURIComponent(data.shortLivedToken)
+      var res  = UrlFetchApp.fetch(url, { muteHttpExceptions: true })
+      var json = JSON.parse(res.getContentText())
+      if (json.error) {
+        return { success: false, error: json.error.message }
+      }
+      props.setProperty('IG_ACCESS_TOKEN', json.access_token)
+      var expiresIn = json.expires_in || 5184000 // default 60 days
+      var expiryDate = new Date(Date.now() + expiresIn * 1000)
+      return {
+        success: true,
+        message: 'Token exchanged and saved. Expires: ' + expiryDate.toLocaleDateString(),
+        expiresAt: expiryDate.toISOString()
+      }
+    } catch (e) {
+      return { success: false, error: 'Token exchange failed: ' + e.message }
+    }
+  }
+
+  return { success: false, error: 'Provide shortLivedToken or longLivedToken.' }
+}
+
+/**
+ * Post an image to Instagram.
+ * data.imageUrl  — public URL of the image (required)
+ * data.caption   — post caption (required)
+ */
+function handlePostToInstagram(data) {
+  if (!data.imageUrl) return { success: false, error: 'Missing imageUrl.' }
+  if (!data.caption)  return { success: false, error: 'Missing caption.' }
+
+  var props = PropertiesService.getScriptProperties()
+  var token = props.getProperty('IG_ACCESS_TOKEN')
+  if (!token) {
+    return { success: false, error: 'No Instagram token configured. Use setInstagramToken first.' }
+  }
+
+  try {
+    // Step 1: Create media container
+    var containerRes = UrlFetchApp.fetch(
+      'https://graph.facebook.com/v19.0/' + IG_USER_ID + '/media', {
+        method: 'post',
+        contentType: 'application/json',
+        payload: JSON.stringify({
+          image_url: data.imageUrl,
+          caption: data.caption,
+          access_token: token
+        }),
+        muteHttpExceptions: true
+      }
+    )
+    var containerData = JSON.parse(containerRes.getContentText())
+    if (containerData.error) {
+      return { success: false, error: 'Container error: ' + containerData.error.message }
+    }
+    var creationId = containerData.id
+
+    // Step 2: Wait for Instagram to process the image
+    Utilities.sleep(5000)
+
+    // Step 3: Publish
+    var publishRes = UrlFetchApp.fetch(
+      'https://graph.facebook.com/v19.0/' + IG_USER_ID + '/media_publish', {
+        method: 'post',
+        contentType: 'application/json',
+        payload: JSON.stringify({
+          creation_id: creationId,
+          access_token: token
+        }),
+        muteHttpExceptions: true
+      }
+    )
+    var publishData = JSON.parse(publishRes.getContentText())
+    if (publishData.error) {
+      return { success: false, error: 'Publish error: ' + publishData.error.message }
+    }
+
+    return { success: true, postId: publishData.id, message: 'Posted to Instagram!' }
+
+  } catch (e) {
+    Logger.log('Instagram post error: ' + e.message)
+    return { success: false, error: 'Failed to post: ' + e.message }
+  }
 }

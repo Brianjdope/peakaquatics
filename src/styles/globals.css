@@ -2302,13 +2302,10 @@ body::after {
   background-repeat: no-repeat;
 }
 
-/* On phones, show the full image (no crop) for slides flagged contain-mobile.
-   The dark page background fills any letterbox area cleanly. */
+/* On phones, allow per-slide horizontal/vertical focus override via CSS var. */
 @media (max-width: 768px) {
-  .pas-athlete-bg--contain-mobile {
-    background-size: contain;
-    background-position: center top;
-    background-color: #030303;
+  .pas-athlete-bg {
+    background-position: var(--bg-position-mobile, center);
   }
 }
 

@@ -1,28 +1,55 @@
 import React, { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { ARTICLES } from '../data'
 
-// Instagram Graph API config — update these after connecting your account
-const IG_CONFIG = {
-  accessToken: '', // Long-lived access token (set after Meta app setup)
-  igUserId: '',    // Instagram Business Account ID
+const ADMIN_PASSWORD = 'peakaquatic2026'
+const SHEETS_API = 'https://script.google.com/macros/s/AKfycbxXftEZLmAm-vQ4MQi2GZgycipF-JXo4-ZdnxAWT8kuIojrhhvSyP9XjKJh9WzO3a4d/exec'
+
+// Convert article data into an Instagram caption
+function articleToCaption(article) {
+  let caption = `${article.title}\n\n${article.excerpt}`
+  caption += '\n\n#peakaquaticsports #swimming #competitiveswimming #swimcoach #usaswimming'
+  return caption
 }
 
-const ADMIN_PASSWORD = 'peakaquatic2026' // Simple gate — change this
+// Resolve article image to a full public URL
+function resolveImageUrl(img) {
+  if (!img) return ''
+  if (img.startsWith('http')) return img
+  // Local images like /photos/... need the deployed site URL prefix
+  return 'https://brianjdope.github.io/peakaquatics1' + img
+}
 
 export default function AdminPage() {
   const [authenticated, setAuthenticated] = useState(false)
   const [password, setPassword] = useState('')
   const [authError, setAuthError] = useState('')
 
-  // Instagram post state
+  // Tab: 'article' or 'custom'
+  const [tab, setTab] = useState('article')
+
+  // Article picker
+  const [selectedArticle, setSelectedArticle] = useState('')
+
+  // Custom post state
   const [imageFile, setImageFile] = useState(null)
   const [imagePreview, setImagePreview] = useState(null)
   const [imageUrl, setImageUrl] = useState('')
   const [caption, setCaption] = useState('')
+
+  // Token setup
+  const [tokenInput, setTokenInput] = useState('')
+  const [tokenSaving, setTokenSaving] = useState(false)
+  const [tokenMsg, setTokenMsg] = useState(null)
+
+  // Post state
   const [posting, setPosting] = useState(false)
   const [postResult, setPostResult] = useState(null)
   const [postError, setPostError] = useState('')
   const fileRef = useRef(null)
+
+  const articleKeys = Object.keys(ARTICLES)
+  const currentArticle = selectedArticle ? ARTICLES[selectedArticle] : null
 
   const handleLogin = (e) => {
     e.preventDefault()
@@ -43,101 +70,31 @@ export default function AdminPage() {
     setPostError('')
   }
 
-  const handlePost = async () => {
-    if (!caption.trim()) {
-      setPostError('Please enter a caption.')
-      return
-    }
-
-    // Need either a public image URL or an uploaded image
-    const finalImageUrl = imageUrl.trim()
-    if (!finalImageUrl && !imageFile) {
-      setPostError('Please provide an image URL or upload an image.')
-      return
-    }
-
-    if (!IG_CONFIG.accessToken || !IG_CONFIG.igUserId) {
-      setPostError('Instagram API not configured yet. Please provide your Instagram account details to Brian.')
-      return
-    }
-
-    setPosting(true)
-    setPostError('')
-    setPostResult(null)
-
+  // Save token to Apps Script (stores directly as long-lived token)
+  const handleSaveToken = async () => {
+    if (!tokenInput.trim()) return
+    setTokenSaving(true)
+    setTokenMsg(null)
     try {
-      // If user uploaded a file but no URL, we need a publicly accessible URL
-      // Instagram API requires a public URL — uploaded files need to go through a hosting service
-      let pubUrl = finalImageUrl
-
-      if (!pubUrl && imageFile) {
-        // Upload to a temporary image host or use the Apps Script to host on Drive
-        pubUrl = await uploadImageToDrive(imageFile)
-      }
-
-      if (!pubUrl) {
-        setPostError('Could not get a public URL for the image. Please paste a direct image URL instead.')
-        setPosting(false)
-        return
-      }
-
-      // Step 1: Create media container
-      const containerRes = await fetch(
-        `https://graph.facebook.com/v19.0/${IG_CONFIG.igUserId}/media`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            image_url: pubUrl,
-            caption: caption,
-            access_token: IG_CONFIG.accessToken,
-          }),
-        }
-      )
-      const containerData = await containerRes.json()
-
-      if (containerData.error) {
-        throw new Error(containerData.error.message)
-      }
-
-      const creationId = containerData.id
-
-      // Step 2: Wait a moment for Instagram to process
-      await new Promise(r => setTimeout(r, 3000))
-
-      // Step 3: Publish the container
-      const publishRes = await fetch(
-        `https://graph.facebook.com/v19.0/${IG_CONFIG.igUserId}/media_publish`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            creation_id: creationId,
-            access_token: IG_CONFIG.accessToken,
-          }),
-        }
-      )
-      const publishData = await publishRes.json()
-
-      if (publishData.error) {
-        throw new Error(publishData.error.message)
-      }
-
-      setPostResult({
-        success: true,
-        postId: publishData.id,
-        message: 'Successfully posted to Instagram!'
+      const res = await fetch(SHEETS_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({
+          action: 'setInstagramToken',
+          longLivedToken: tokenInput.trim(),
+        }),
       })
-
-      // Reset form
-      setCaption('')
-      setImageFile(null)
-      setImagePreview(null)
-      setImageUrl('')
-      if (fileRef.current) fileRef.current.value = ''
-
+      const data = await res.json()
+      if (data.success) {
+        setTokenMsg({ type: 'success', text: data.message })
+        setTokenInput('')
+      } else {
+        setTokenMsg({ type: 'error', text: data.error })
+      }
     } catch (err) {
-      setPostError('Failed to post: ' + err.message)
+      setTokenMsg({ type: 'error', text: 'Failed to save: ' + err.message })
     } finally {
-      setPosting(false)
+      setTokenSaving(false)
     }
   }
 
@@ -150,8 +107,6 @@ export default function AdminPage() {
         reader.onerror = reject
         reader.readAsDataURL(file)
       })
-
-      const SHEETS_API = 'https://script.google.com/macros/s/AKfycbxiGm4FBKULvmZVze3IlRYDO741OcmexbSk0-cDpSQhYhoy4X95RE6WIAVw0X7o6tT7/exec'
       const res = await fetch(SHEETS_API, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain' },
@@ -163,13 +118,132 @@ export default function AdminPage() {
         }),
       })
       const data = await res.json()
-      if (data.success && data.imageUrl) {
-        return data.imageUrl
-      }
-      return null
-    } catch {
-      return null
+      if (data.success && data.imageUrl) return data.imageUrl
+      throw new Error(data.error || 'Upload failed')
+    } catch (err) {
+      throw new Error('Image upload failed: ' + err.message)
     }
+  }
+
+  // Post to Instagram directly from the browser (bypasses UrlFetchApp)
+  const handlePost = async () => {
+    setPosting(true)
+    setPostError('')
+    setPostResult(null)
+
+    try {
+      let finalImageUrl = ''
+      let finalCaption = ''
+
+      if (tab === 'article') {
+        if (!currentArticle) {
+          setPostError('Please select an article.')
+          setPosting(false)
+          return
+        }
+        finalImageUrl = resolveImageUrl(currentArticle.img)
+        finalCaption = articleToCaption(currentArticle)
+      } else {
+        finalCaption = caption.trim()
+        if (!finalCaption) {
+          setPostError('Please enter a caption.')
+          setPosting(false)
+          return
+        }
+        finalImageUrl = imageUrl.trim()
+        if (!finalImageUrl && imageFile) {
+          try {
+            finalImageUrl = await uploadImageToDrive(imageFile)
+          } catch (uploadErr) {
+            setPostError(uploadErr.message)
+            setPosting(false)
+            return
+          }
+        }
+        if (!finalImageUrl) {
+          setPostError('Please provide an image URL or upload an image.')
+          setPosting(false)
+          return
+        }
+      }
+
+      // 1. Retrieve stored token from Apps Script (no UrlFetchApp needed)
+      const cfgRes = await fetch(SHEETS_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ action: 'getInstagramConfig' }),
+      })
+      const cfg = await cfgRes.json()
+      if (!cfg.success) {
+        setPostError(cfg.error || 'Could not retrieve Instagram config.')
+        setPosting(false)
+        return
+      }
+
+      const { token: accessToken, igUserId } = cfg
+
+      // 2. Create media container via Instagram Graph API
+      const containerRes = await fetch(
+        `https://graph.facebook.com/v19.0/${igUserId}/media`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            image_url: finalImageUrl,
+            caption: finalCaption,
+            access_token: accessToken,
+          }),
+        }
+      )
+      const containerData = await containerRes.json()
+      if (containerData.error) {
+        setPostError('Container error: ' + containerData.error.message)
+        setPosting(false)
+        return
+      }
+
+      // 3. Wait for Instagram to process the image
+      await new Promise(r => setTimeout(r, 5000))
+
+      // 4. Publish
+      const publishRes = await fetch(
+        `https://graph.facebook.com/v19.0/${igUserId}/media_publish`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            creation_id: containerData.id,
+            access_token: accessToken,
+          }),
+        }
+      )
+      const publishData = await publishRes.json()
+      if (publishData.error) {
+        setPostError('Publish error: ' + publishData.error.message)
+        setPosting(false)
+        return
+      }
+
+      setPostResult({ success: true, message: 'Posted to Instagram!' })
+      if (tab === 'custom') {
+        setCaption('')
+        setImageFile(null)
+        setImagePreview(null)
+        setImageUrl('')
+        if (fileRef.current) fileRef.current.value = ''
+      }
+    } catch (err) {
+      setPostError('Failed to post: ' + err.message)
+    } finally {
+      setPosting(false)
+    }
+  }
+
+  const labelStyle = { color: 'var(--muted)', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase', display: 'block', marginBottom: '0.4rem' }
+  const inputStyle = {
+    width: '100%', padding: '0.6rem 0.75rem', background: 'var(--bg)',
+    border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)',
+    fontSize: '0.85rem', outline: 'none', boxSizing: 'border-box',
   }
 
   // Password gate
@@ -197,32 +271,15 @@ export default function AdminPage() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="Password"
-              style={{
-                width: '100%',
-                padding: '0.6rem 0.75rem',
-                background: 'var(--bg)',
-                border: '1px solid var(--border)',
-                borderRadius: 8,
-                color: 'var(--text)',
-                fontSize: '0.85rem',
-                marginBottom: '1rem',
-                outline: 'none',
-                boxSizing: 'border-box',
-              }}
+              style={{ ...inputStyle, marginBottom: '1rem' }}
             />
             {authError && <p style={{ color: '#ef4444', fontSize: '0.75rem', marginBottom: '0.75rem' }}>{authError}</p>}
             <button
               type="submit"
               style={{
-                width: '100%',
-                padding: '0.6rem',
-                background: 'var(--text)',
-                color: 'var(--bg)',
-                border: 'none',
-                borderRadius: 8,
-                fontSize: '0.85rem',
-                fontWeight: 600,
-                cursor: 'pointer',
+                width: '100%', padding: '0.6rem', background: 'var(--text)',
+                color: 'var(--bg)', border: 'none', borderRadius: 8,
+                fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer',
               }}
             >
               Login
@@ -248,6 +305,56 @@ export default function AdminPage() {
             Post to Instagram directly from here.
           </p>
 
+          {/* Token Setup Section */}
+          <div style={{
+            background: 'var(--surface)',
+            border: '1px solid var(--border)',
+            borderRadius: 16,
+            padding: '1.5rem',
+            marginBottom: '1.5rem',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1rem' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', margin: 0 }}>Instagram Token</h2>
+            </div>
+            <p style={{ color: 'var(--muted)', fontSize: '0.7rem', marginBottom: '0.75rem', lineHeight: 1.5 }}>
+              Paste a token from Graph API Explorer. It will be exchanged for a 60-day token and stored securely in the server. You only need to do this once every 60 days.
+            </p>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <input
+                type="password"
+                value={tokenInput}
+                onChange={e => setTokenInput(e.target.value)}
+                placeholder="Paste short-lived token here"
+                style={{ ...inputStyle, flex: 1 }}
+              />
+              <button
+                onClick={handleSaveToken}
+                disabled={tokenSaving || !tokenInput.trim()}
+                style={{
+                  padding: '0.6rem 1rem', background: 'var(--text)', color: 'var(--bg)',
+                  border: 'none', borderRadius: 8, fontSize: '0.8rem', fontWeight: 600,
+                  cursor: tokenSaving ? 'not-allowed' : 'pointer',
+                  opacity: tokenSaving || !tokenInput.trim() ? 0.5 : 1,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {tokenSaving ? 'Saving...' : 'Save Token'}
+              </button>
+            </div>
+            {tokenMsg && (
+              <p style={{
+                color: tokenMsg.type === 'success' ? '#34d399' : '#ef4444',
+                fontSize: '0.75rem', marginTop: '0.5rem',
+              }}>
+                {tokenMsg.text}
+              </p>
+            )}
+          </div>
+
           {/* Instagram Post Section */}
           <div style={{
             background: 'var(--surface)',
@@ -264,111 +371,141 @@ export default function AdminPage() {
               <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem', margin: 0 }}>Post to Instagram</h2>
             </div>
 
-            {/* Image Upload */}
-            <label style={{ color: 'var(--muted)', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase', display: 'block', marginBottom: '0.4rem' }}>
-              Image
-            </label>
-
-            <div
-              onClick={() => fileRef.current?.click()}
-              style={{
-                border: `2px dashed ${imagePreview ? 'var(--text)' : 'var(--border)'}`,
-                borderRadius: 12,
-                padding: imagePreview ? 0 : '2rem',
-                textAlign: 'center',
-                cursor: 'pointer',
-                marginBottom: '1rem',
-                overflow: 'hidden',
-                transition: 'border-color 0.2s',
-                position: 'relative',
-              }}
-            >
-              {imagePreview ? (
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  style={{ width: '100%', display: 'block', borderRadius: 10 }}
-                />
-              ) : (
-                <div>
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '0.5rem' }}>
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                    <circle cx="8.5" cy="8.5" r="1.5"/>
-                    <polyline points="21 15 16 10 5 21"/>
-                  </svg>
-                  <p style={{ color: 'var(--muted)', fontSize: '0.8rem', margin: 0 }}>Click to upload image</p>
-                </div>
-              )}
-              <input
-                ref={fileRef}
-                type="file"
-                accept="image/*"
-                onChange={handleImageSelect}
-                style={{ display: 'none' }}
-              />
+            {/* Tabs */}
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.25rem' }}>
+              {[
+                { id: 'article', label: 'From Article' },
+                { id: 'custom', label: 'Custom Post' },
+              ].map(t => (
+                <button
+                  key={t.id}
+                  onClick={() => { setTab(t.id); setPostResult(null); setPostError('') }}
+                  style={{
+                    flex: 1, padding: '0.5rem', border: '1px solid var(--border)',
+                    borderRadius: 8, fontSize: '0.8rem', fontWeight: 600,
+                    cursor: 'pointer',
+                    background: tab === t.id ? 'var(--text)' : 'transparent',
+                    color: tab === t.id ? 'var(--bg)' : 'var(--muted)',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  {t.label}
+                </button>
+              ))}
             </div>
 
-            {/* Or paste image URL */}
-            <label style={{ color: 'var(--muted)', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase', display: 'block', marginBottom: '0.4rem' }}>
-              Or paste image URL
-            </label>
-            <input
-              type="url"
-              value={imageUrl}
-              onChange={e => { setImageUrl(e.target.value); setPostResult(null); setPostError('') }}
-              placeholder="https://example.com/image.jpg"
-              style={{
-                width: '100%',
-                padding: '0.6rem 0.75rem',
-                background: 'var(--bg)',
-                border: '1px solid var(--border)',
-                borderRadius: 8,
-                color: 'var(--text)',
-                fontSize: '0.85rem',
-                marginBottom: '1rem',
-                outline: 'none',
-                boxSizing: 'border-box',
-              }}
-            />
+            {/* Article Tab */}
+            {tab === 'article' && (
+              <>
+                <label style={labelStyle}>Select Article</label>
+                <select
+                  value={selectedArticle}
+                  onChange={e => { setSelectedArticle(e.target.value); setPostResult(null); setPostError('') }}
+                  style={{
+                    ...inputStyle,
+                    marginBottom: '1rem',
+                    appearance: 'auto',
+                  }}
+                >
+                  <option value="">Choose an article...</option>
+                  {articleKeys.map(key => (
+                    <option key={key} value={key}>
+                      {ARTICLES[key].title} ({ARTICLES[key].date})
+                    </option>
+                  ))}
+                </select>
 
-            {/* Caption */}
-            <label style={{ color: 'var(--muted)', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase', display: 'block', marginBottom: '0.4rem' }}>
-              Caption
-            </label>
-            <textarea
-              value={caption}
-              onChange={e => { setCaption(e.target.value); setPostResult(null); setPostError('') }}
-              placeholder="Write your caption here... Include hashtags at the end."
-              rows={6}
-              style={{
-                width: '100%',
-                padding: '0.6rem 0.75rem',
-                background: 'var(--bg)',
-                border: '1px solid var(--border)',
-                borderRadius: 8,
-                color: 'var(--text)',
-                fontSize: '0.85rem',
-                resize: 'vertical',
-                fontFamily: 'var(--font-body)',
-                marginBottom: '0.5rem',
-                outline: 'none',
-                boxSizing: 'border-box',
-              }}
-            />
-            <p style={{ color: 'var(--muted)', fontSize: '0.7rem', marginBottom: '1.25rem', textAlign: 'right' }}>
-              {caption.length} / 2,200
-            </p>
+                {currentArticle && (
+                  <div style={{
+                    border: '1px solid var(--border)',
+                    borderRadius: 12,
+                    overflow: 'hidden',
+                    marginBottom: '1.25rem',
+                  }}>
+                    <img
+                      src={resolveImageUrl(currentArticle.img)}
+                      alt={currentArticle.title}
+                      style={{ width: '100%', display: 'block', maxHeight: 250, objectFit: 'cover' }}
+                    />
+                    <div style={{ padding: '0.75rem' }}>
+                      <p style={{ fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.3rem' }}>{currentArticle.title}</p>
+                      <p style={{ color: 'var(--muted)', fontSize: '0.7rem', lineHeight: 1.5, whiteSpace: 'pre-wrap' }}>
+                        {articleToCaption(currentArticle)}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+
+            {/* Custom Tab */}
+            {tab === 'custom' && (
+              <>
+                {/* Image Upload */}
+                <label style={labelStyle}>Image</label>
+                <div
+                  onClick={() => fileRef.current?.click()}
+                  style={{
+                    border: `2px dashed ${imagePreview ? 'var(--text)' : 'var(--border)'}`,
+                    borderRadius: 12,
+                    padding: imagePreview ? 0 : '2rem',
+                    textAlign: 'center',
+                    cursor: 'pointer',
+                    marginBottom: '1rem',
+                    overflow: 'hidden',
+                    transition: 'border-color 0.2s',
+                  }}
+                >
+                  {imagePreview ? (
+                    <img src={imagePreview} alt="Preview" style={{ width: '100%', display: 'block', borderRadius: 10 }} />
+                  ) : (
+                    <div>
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '0.5rem' }}>
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                      </svg>
+                      <p style={{ color: 'var(--muted)', fontSize: '0.8rem', margin: 0 }}>Click to upload image</p>
+                    </div>
+                  )}
+                  <input ref={fileRef} type="file" accept="image/*" onChange={handleImageSelect} style={{ display: 'none' }} />
+                </div>
+
+                <label style={labelStyle}>Or paste image URL</label>
+                <input
+                  type="url"
+                  value={imageUrl}
+                  onChange={e => { setImageUrl(e.target.value); setPostResult(null); setPostError('') }}
+                  placeholder="https://example.com/image.jpg"
+                  style={{ ...inputStyle, marginBottom: '1rem' }}
+                />
+
+                <label style={labelStyle}>Caption</label>
+                <textarea
+                  value={caption}
+                  onChange={e => { setCaption(e.target.value); setPostResult(null); setPostError('') }}
+                  placeholder="Write your caption here... Include hashtags at the end."
+                  rows={6}
+                  style={{
+                    ...inputStyle,
+                    resize: 'vertical',
+                    fontFamily: 'var(--font-body)',
+                    marginBottom: '0.5rem',
+                  }}
+                />
+                <p style={{ color: 'var(--muted)', fontSize: '0.7rem', marginBottom: '1.25rem', textAlign: 'right' }}>
+                  {caption.length} / 2,200
+                </p>
+              </>
+            )}
 
             {/* Error / Success */}
             {postError && (
               <div style={{
                 background: 'rgba(239,68,68,0.1)',
                 border: '1px solid rgba(239,68,68,0.3)',
-                borderRadius: 8,
-                padding: '0.75rem',
-                marginBottom: '1rem',
-                color: '#ef4444',
-                fontSize: '0.8rem',
+                borderRadius: 8, padding: '0.75rem', marginBottom: '1rem',
+                color: '#ef4444', fontSize: '0.8rem',
               }}>
                 {postError}
               </div>
@@ -378,11 +515,8 @@ export default function AdminPage() {
               <div style={{
                 background: 'rgba(52,211,153,0.1)',
                 border: '1px solid rgba(52,211,153,0.3)',
-                borderRadius: 8,
-                padding: '0.75rem',
-                marginBottom: '1rem',
-                color: '#34d399',
-                fontSize: '0.8rem',
+                borderRadius: 8, padding: '0.75rem', marginBottom: '1rem',
+                color: '#34d399', fontSize: '0.8rem',
               }}>
                 {postResult.message}
               </div>
@@ -395,17 +529,12 @@ export default function AdminPage() {
               onClick={handlePost}
               disabled={posting}
               style={{
-                width: '100%',
-                padding: '0.75rem',
+                width: '100%', padding: '0.75rem',
                 background: posting ? 'var(--border)' : 'linear-gradient(135deg, #833AB4, #E1306C, #F77737)',
-                color: '#fff',
-                border: 'none',
-                borderRadius: 10,
-                fontSize: '0.9rem',
-                fontWeight: 700,
+                color: '#fff', border: 'none', borderRadius: 10,
+                fontSize: '0.9rem', fontWeight: 700,
                 cursor: posting ? 'not-allowed' : 'pointer',
-                opacity: posting ? 0.7 : 1,
-                transition: 'opacity 0.2s',
+                opacity: posting ? 0.7 : 1, transition: 'opacity 0.2s',
               }}
             >
               {posting ? 'Posting...' : 'Post to Instagram'}

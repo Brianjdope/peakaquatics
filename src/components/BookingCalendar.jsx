@@ -1069,8 +1069,8 @@ export default function BookingCalendar({ cancelParams, onCancelParamsUsed }) {
               <p style={{ color: 'var(--muted)', fontSize: '0.72rem', marginBottom: '0.4rem' }}>Skill Level (optional)</p>
               <div style={{ display: 'flex', gap: '0.4rem' }}>
                 {[
-                  { label: 'Novice',       color: '#34d399', dimBg: 'rgba(52,211,153,0.12)',  dimText: '#34d399' },
-                  { label: 'Intermediate', color: '#fbbf24', dimBg: 'rgba(251,191,36,0.12)',  dimText: '#fbbf24' },
+                  { label: '10 & U',       color: '#34d399', dimBg: 'rgba(52,211,153,0.12)',  dimText: '#34d399' },
+                  { label: "JO's",         color: '#fbbf24', dimBg: 'rgba(251,191,36,0.12)',  dimText: '#fbbf24' },
                   { label: 'Sectionals+',  color: '#ef4444', dimBg: 'rgba(239,68,68,0.12)',   dimText: '#ef4444' },
                 ].map(({ label, color, dimBg, dimText }) => (
                   <button
