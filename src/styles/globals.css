@@ -1888,6 +1888,7 @@ section { padding: 8rem 0; }
     left: 12px;
     bottom: calc(12px + env(safe-area-inset-bottom));
     padding: 0.85rem 1rem;
+    justify-content: center;
   }
 }
 
