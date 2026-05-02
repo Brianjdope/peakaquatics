@@ -7,7 +7,7 @@ import Testimonials from '../components/Testimonials'
 import Preloader from '../components/Preloader'
 import { ABOUT, STATS } from '../data'
 
-const LOGO_URL = '/icons/icon-512.svg'
+const LOGO_URL = 'https://images.squarespace-cdn.com/content/v1/613a5c22540e534e72bda9a1/7fd6ea37-8f94-4626-ac71-1fe5e214471e/peak-aquatic-primary-logo-black.png'
 
 const ATHLETE_SLIDES = [
   {
@@ -192,6 +192,8 @@ export default function HomePage({ setPage, goToBooking }) {
               alt="Peak Aquatic Sports"
             />
           </div>
+          <h1 className="pas-hero-h1">Peak Aquatic Sports</h1>
+          <p className="pas-hero-tagline">Rise Higher</p>
         </motion.div>
         <motion.div
           className="pas-hero-scroll"
