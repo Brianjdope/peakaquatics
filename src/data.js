@@ -952,7 +952,7 @@ export const TESTIMONIALS = [
 ]
 
 export const ABOUT = {
-  mission: 'Peak Aquatic Sports is a swimming consultancy that is dedicated in helping parents and student athletes reach their short term and long term swimming goals. Our mission is to instill strong core values of integrity, humility, and discipline through the sport of swimming.',
+  mission: 'Peak Aquatic Sports is a swimming consultancy that is dedicated in helping parents and student athletes achieve their short term and long term swimming goals. Our mission is to instill strong core values of integrity, humility, and discipline through the sport of swimming.',
   homeIntro: 'Started in 2020, Peak Aquatic Sports is a swimming consultancy that is dedicated in guiding athletes and parents on the long journey of competitive club swimming and its collegiate recruitment process.',
   homeBody: 'From World Aquatics Championships qualifiers to entry level swimmers, we assess each athlete individually and tailor the program to fit their specific physiological and psychological needs to maximize their performance in the water.',
   coachBio: [
