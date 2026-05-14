@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "Vite Dev Server",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "/tmp/node-v20.18.0-darwin-x64/bin/node",
+      "runtimeArgs": ["node_modules/.bin/vite", "--port", "8421"],
       "port": 8421
     },
     {
