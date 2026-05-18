@@ -862,6 +862,7 @@ export const RECORDS_TABLES = {
     r('200 Back',   p('Chloe Kim',         '2:17.40',  2025), p('Rebekah Jung',      '2:23.67',  2024), p('Kate Hurst',         '2:24.37',  2023)),
     r('100 Fly',    p('Chloe Kim',         '1:01.92',  2025), p('Kate Hurst',        '1:04.43',  2023), p('Kayla Rodriguez',    '1:04.68',  2025)),
     r('200 Fly',    p('Chloe Kim',         '2:12.69',  2025), p('Kate Hurst',        '2:17.46',  2023), p('Kathleen Turano',    '2:19.31',  2025)),
+    r('50 Breast',  p('Stephanie Kim',     '33.58',    2026), p('',                  '',         ''),    p('',                   '',         '')),
     r('100 Breast', p('Kayla Rodriguez',   '1:12.54',  2025), p('Stephanie Kim',     '1:13.23',  2025), p('Chloe Kim',          '1:14.87',  2022)),
     r('200 Breast', p('Chloe Kim',         '2:35.36',  2022), p('Stephanie Kim',     '2:35.83',  2025), p('Kayla Rodriguez',    '2:35.88',  2025)),
     r('200 IM',     p('Chloe Kim',         '2:16.36',  2025), p('Kate Hurst',        '2:19.35',  2024), p('Grace Lee',          '2:25.89',  2023)),
