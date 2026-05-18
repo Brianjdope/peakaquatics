@@ -770,7 +770,7 @@ export const RECORDS_TABLES = {
   // LCM GIRLS 14 & UNDER
   // ═══════════════════════════════════════════════════════════
   'lcm-girls-14': buildTable('LCM Girls 14 & Under', [
-    r('50 Free',    p('Chloe Kim',      '27.72',    2022), p('Emma Zhang',        '28.44',    2025), p('Jessica Sung',       '28.52',    2025)),
+    r('50 Free',    p('Chloe Kim',      '27.72',    2022), p('Emma Zhang',        '27.79',    2026), p('Jessica Sung',       '28.52',    2025)),
     r('100 Free',   p('Chloe Kim',      '59.36',    2022), p('Emma Zhang',        '1:01.73',  2025), p('Rebekah Jung',       '1:01.87',  2022)),
     r('200 Free',   p('Chloe Kim',      '2:04.81',  2022), p('Ava Lan',           '2:09.09',  2026), p('Emma Zhang',         '2:11.40',  2025)),
     r('400 Free',   p('Chloe Kim',      '4:18.60',  2022), p('Ava Lan',           '4:26.15',  2026), p('Susie Lee',          '4:30.82',  2019)),
@@ -780,6 +780,7 @@ export const RECORDS_TABLES = {
     r('200 Back',   p('Chloe Kim',      '2:17.48',  2022), p('Susie Lee',         '2:24.65',  2019), p('Rebekah Jung',       '2:24.69',  2022)),
     r('100 Fly',    p('Chloe Kim',      '1:03.79',  2022), p('Jessica Sung',      '1:04.92',  2025), p('Susie Lee',          '1:05.93',  2019)),
     r('200 Fly',    p('Chloe Kim',      '2:19.50',  2022), p('Jessica Sung',      '2:22.80',  2025), p('Susie Lee',          '2:24.06',  2019)),
+    r('50 Breast',  p('Emma Zhang',     '35.52',    2026), p('',                  '',         ''),    p('',                   '',         '')),
     r('100 Breast', p('Stephanie Kim',  '1:13.91',  2024), p('Emma Zhang',        '1:13.98',  2025), p('Chloe Kim',          '1:14.87',  2022)),
     r('200 Breast', p('Chloe Kim',      '2:38.66',  2022), p('Stephanie Kim',     '2:38.75',  2024), p('Madelyn Raguindin',  '2:44.55',  2023)),
     r('200 IM',     p('Chloe Kim',      '2:18.79',  2022), p('Ava Lan',           '2:25.31',  2026), p('Susie Lee',          '2:25.46',  2019)),
